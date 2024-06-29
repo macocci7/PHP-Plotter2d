@@ -2,15 +2,26 @@
 
 namespace Macocci7\PhpPlotter2d\Traits;
 
-use Intervention\Image\Geometry\Factories\LineFactory;
-use Intervention\Image\Geometry\Factories\RectangleFactory;
-use  Intervention\Image\Geometry\Factories\CircleFactory;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Interfaces\ImageInterface;
-use Intervention\Image\Typography\FontFactory;
-
 trait PlotterTrait
 {
+    /**
+     * plots a pixel
+     *
+     * @param   int|float   $x
+     * @param   int|float   $y
+     * @param   string      $color
+     * @return  self
+     */
+    public function plotPixel(
+        int|float $x,
+        int|float $y,
+        string $color,
+    ) {
+        $coord = $this->transformer->getCoord($x, $y);
+        $this->drawPixel($coord['x'], $coord['y'], $color);
+        return $this;
+    }
+
     /**
      * draws a line on the canvas
      *
@@ -22,7 +33,7 @@ trait PlotterTrait
      * @param   string|null $color = '#000000'
      * @return  self
      */
-    public function line(
+    public function plotLine(
         int|float $x1,
         int|float $y1,
         int|float $x2,
@@ -32,13 +43,13 @@ trait PlotterTrait
     ) {
         $from = $this->transformer->getCoord($x1, $y1);
         $to = $this->transformer->getCoord($x2, $y2);
-        $this->image->drawLine(
-            function (LineFactory $line) use ($from, $to, $width, $color) {
-                $line->from($from['x'], $from['y']);
-                $line->to($to['x'], $to['y']);
-                $line->color($color);
-                $line->width($width);
-            }
+        $this->drawLine(
+            $from['x'],
+            $from['y'],
+            $to['x'],
+            $to['y'],
+            $width,
+            $color,
         );
         return $this;
     }
@@ -55,7 +66,7 @@ trait PlotterTrait
      * @param   string|null $backgroundColor = '#000000'
      * @return  self
      */
-    public function box(
+    public function plotBox(
         int|float   $x1,
         int|float   $y1,
         int|float   $x2,
@@ -65,71 +76,141 @@ trait PlotterTrait
         string|null $borderColor = '#000000',
     ) {
         $from = $this->transformer->getCoord($x1, $y1);
-        $to = $this->transformer->getCoord($x2, $y2);
-        $this->image->drawRectangle(
+        $to   = $this->transformer->getCoord($x2, $y2);
+        $this->drawBox(
             $from['x'],
             $from['y'],
-            function (
-                RectangleFactory $rectangle
-            ) use (
-                $from,
-                $to,
-                $backgroundColor,
-                $borderWidth,
-                $borderColor,
-            ) {
-                $rectangle->size(
-                    abs($to['x'] - $from['x']),
-                    abs($to['y'] - $from['y']),
-                );
-                $rectangle->background($backgroundColor);
-                $rectangle->border($borderColor, $borderWidth);
-            }
+            $to['x'],
+            $to['y'],
+            $backgroundColor,
+            $borderWidth,
+            $borderColor,
         );
         return $this;
     }
 
     /**
-     * draws a circle on the canvas
+     * plots a circle on the plotarea
      *
      * @param   int|float   $x
      * @param   int|float   $y
-     * @param   int         $rardius
+     * @param   int|float   $rardius
      * @param   string|null $backgroundColor = null
      * @param   int         $borderWidth = 1
      * @param   string|null $borderColor = '#000000'
      * @return  self
      */
-    public function dot(
+    public function plotCircle(
         int|float   $x,
         int|float   $y,
-        int         $radius = 1,    // in pix
+        int|float   $radius,
         string|null $backgroundColor = null,
         int         $borderWidth = 1,
         string|null $borderColor = '#000000',
     ) {
         $center = $this->transformer->getCoord($x, $y);
-        $this->image->drawCircle(
+        $width = $this->transformer->getSpanX($radius);
+        $height = $this->transformer->getSpanY($radius);
+        $this->drawEllipse(
             $center['x'],
             $center['y'],
-            function (
-                CircleFactory $circle
-            ) use (
-                $radius,
-                $backgroundColor,
-                $borderWidth,
-                $borderColor,
-            ) {
-                $circle->radius($radius);
-                $circle->background($backgroundColor);
-                $circle->border($borderColor, $borderWidth);
-            }
+            $width,
+            $height,
+            $backgroundColor,
+            $borderWidth,
+            $borderColor,
         );
         return $this;
     }
 
     /**
-     * draws a text on the canvas
+     * plots an ellipse
+     *
+     * @param   int|float   $x
+     * @param   int|float   $y
+     * @param   int|float   $width
+     * @param   int|float   $height
+     * @param   string|null $backgroundColor
+     * @param   int         $borderWidth
+     * @param   string|null $borderColor
+     * @return  self
+     */
+    public function plotEllipse(
+        int|float   $x,
+        int|float   $y,
+        int|float   $width,
+        int|float   $height,
+        string|null $backgroundColor = null,
+        int         $borderWidth = 1,
+        string|null $borderColor = '#000000',
+    ) {
+        $coord = $this->transformer->getCoord($x, $y);
+        $w = $this->transformer->getSpanX($width);
+        $h = $this->transformer->getSpanY($height);
+        $this->drawEllipse(
+            $coord['x'],
+            $coord['y'],
+            $w,
+            $h,
+            $backgroundColor,
+            $borderWidth,
+            $borderColor,
+        );
+        return $this;
+    }
+
+    /**
+     * plots a polygon
+     *
+     * @param   array<int, array<int, int|float>>   $points
+     * @param   string|null                         $backgroundColor
+     * @param   int                                 $borderWidth
+     * @param   string|null                         $borderColor
+     * @return  self
+     */
+    public function plotPolygon(
+        array $points,
+        string|null $backgroundColor,
+        int $borderWidth,
+        string|null $borderColor,
+    ) {
+        $coords = $this->transformer->getCoords($points);
+        $this->drawPolygon(
+            $coords,
+            $backgroundColor,
+            $borderWidth,
+            $borderColor,
+        );
+        return $this;
+    }
+
+    /**
+     * plots a Bezier Curve
+     *
+     * @param   array<int, array<int, int|float>>   $points
+     * @param   string|null                         $backgroundColor
+     * @param   int                                 $borderWidth
+     * @param   string|null                         $borderColor
+     * @return  self
+     */
+    public function plotBezier(
+        array $points,
+        string|null $backgroundColor,
+        int $borderWidth,
+        string|null $borderColor,
+    ) {
+        $coords = $this->transformer->getCoords($points);
+        $this->drawBezier(
+            $coords,
+            $backgroundColor,
+            $borderWidth,
+            $borderColor,
+        );
+        return $this;
+    }
+
+    /**
+     * plots a text on the plotarea
      *
      * @param   string  $text
      * @param   int     $x
@@ -141,7 +222,7 @@ trait PlotterTrait
      * @param   string  $vlign = 'bottom'
      * @return  self
      */
-    public function text(
+    public function plotText(
         string $text,
         int $x,
         int $y,
@@ -151,36 +232,35 @@ trait PlotterTrait
         string $align = 'left',   // 'right', 'center', 'left'(default)
         string $valign = 'bottom',  // 'top', 'middle', 'bottom'(default)
     ) {
-        if ($fontSize === 0) {
-            $fontSize = $this->fontSize;
-        }
-        if (strlen($fontPath) === 0) {
-            $fontPath = $this->fontPath;
-        }
-        if (!$this->isColorCode($fontColor)) {
-            $fontColor = $this->fontColor;
-        }
         $pos = $this->transformer->getCoord($x, $y);
-        $this->image->text(
+        $this->drawText(
             $text,
             $pos['x'],
             $pos['y'],
-            function (
-                FontFactory $font
-            ) use (
-                $fontSize,
-                $fontPath,
-                $fontColor,
-                $align,
-                $valign,
-            ) {
-                $font->filename($fontPath);
-                $font->size($fontSize);
-                $font->color($fontColor);
-                $font->align($align);
-                $font->valign($valign);
-            }
+            $fontSize,
+            $fontPath,
+            $fontColor,
+            $align,
+            $valign,
         );
+        return $this;
+    }
+
+    /**
+     * fills the image with the color
+     *
+     * @param   int|float   $x
+     * @param   int|float   $y
+     * @param   string      $color
+     * @return  self
+     */
+    public function plotFill(
+        int|float $x,
+        int|float $y,
+        string $color,
+    ) {
+        $coord = $this->transformer->getCoord($x, $y);
+        $this->fill($coord['x'], $coord['y'], $color);
         return $this;
     }
 }

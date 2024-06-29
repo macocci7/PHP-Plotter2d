@@ -27,16 +27,18 @@ $plotter = Plotter::make(
 $plotter
     // plotting inside the plotarea
     ->plotBox(-8, 5, 8, -5, '#cccccc', 2, '#009900')
+    ->plotAxisX()
+    ->plotAxisY()
     ->plotPixel(5, -4.5, '#ff0000')
     ->plotLine(-8, -5, 8, 5, 2, '#ff6600', )
     ->plotCircle(0, 0, 3.6, '#ff9999', 2, '#ff0000')
-    ->plotEllipse(-2.5, -1.8, 3.5, 1.5, '#ccccff', 2, '#000099')
+    ->plotEllipse(1.5, -4.8, 4.5, 2.5, '#ccccff', 2, '#000099')
     ->plotPolygon(
         points: [
-            [-4, 1.5],
-            [-7.5, -2.8],
-            [-3, 0],
-            [-6, 0.5],
+            [-6, 1.5],
+            [-9.5, -2.8],
+            [-5, 0],
+            [-8, 0.5],
         ],
         backgroundColor: '#ffff00',
         borderWidth: 2,
@@ -44,22 +46,22 @@ $plotter
     )
     ->plotBezier(
         points: [
-            [1, -1.5],
-            [2, -4.5],
-            [3, 1.5],
-            [4, -2.5],
+            [3, -1.5],
+            [5, -4.5],
+            [7, 1.5],
+            [9, -2.5],
         ],
         backgroundColor: '#99ff99',
         borderWidth: 2,
         borderColor: '#009900',
     )
-    ->plotFill(0, 4.5, '#ffffff')
+    ->plotFill(0.5, -2.5, '#ffffff')
     ->plotText("Hi, guys! How's it going with you, today?", -7, 3, 32, '', '#006600')
     // drawing outside the plotarea
     ->drawPolygon(
         points: [
-            [20, 20],
-            [120, 120],
+            [-20, 20],
+            [200, 180],
             [120, 20],
             [20, 120],
         ],
@@ -69,14 +71,14 @@ $plotter
     )
     ->drawBezier(
         points: [
-            [50, 400],
-            [150, 260],
-            [240, 500],
-            [300, 340],
+            [-50, 600],
+            [150, 360],
+            [240, 600],
+            [300, 440],
         ],
         backgroundColor: '#00cc00',
         borderWidth: 2,
         borderColor: '#006600',
     )
-    ->drawText('Basic Usage', 300, 20, 32, fontColor: '#ffffff', valign: 'top')
-    ->save('img/BasicUsage.png');
+    ->drawText('Just a Graffiti', 300, 20, 32, fontColor: '#ffffff', valign: 'top')
+    ->save('img/Graffiti.png');

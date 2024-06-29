@@ -1,4 +1,4 @@
-# Configuration for Macocci7\PhpPlotter2d\Canvas
+# Configuration for Macocci7\PhpPlotter2d\Plotarea
 
 props:
     CANVAS_WIDTH_LIMIT_LOWER: 100
@@ -8,8 +8,6 @@ props:
     fontPath: 'fonts/ipaexg.ttf'
     fontSize: 16
     fontColor: '#333333'
-    defaultPlotareaRateX: 0.7
-    defaultPlotareaRateY: 0.7
 
 validConfig:
     canvasWidth:

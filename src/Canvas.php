@@ -8,8 +8,8 @@ use Macocci7\PhpPlotter2d\Helpers\Config;
 
 class Canvas
 {
+    use Traits\DrawerTrait;
     use Traits\JudgeTrait;
-    use Traits\PlotterTrait;
 
     protected int $CANVAS_WIDTH_LIMIT_LOWER;
     protected int $CANVAS_HEIGHT_LIMIT_LOWER;
@@ -20,7 +20,8 @@ class Canvas
     protected string $imageDriver = 'imagick';
     protected ImageManager $imageManager;
     protected ImageInterface $image;
-    protected Transformer $transformer;
+
+    protected Plotarea $plogareaClass;
 
     /**
      * constructor
@@ -41,10 +42,32 @@ class Canvas
         if ($this->plotarea === []) {
             $this->setDefaultPlotarea();
         }
-        $this->transformer = new Transformer(
+        $this->plotareaClass = (new Plotarea(
+            size: [
+                'width' => $this->plotarea['width'],
+                'height' => $this->plotarea['height'],
+            ],
             viewport: $this->viewport,
-            plotarea: $this->plotarea,
-        );
+            backgroundColor: $this->plotarea['backgroundColor'] ?? '#ffffff',
+        ))->create();
+    }
+
+    /**
+     * calls plot*() methods of Plotarea class
+     *
+     * @param   string                  $name
+     * @param   array<string, mixed>    $arguments
+     * @return  self
+     * @thrown  \Exception
+     */
+    public function __call(string $name, array $arguments)
+    {
+        if (str_starts_with($name, 'plot')) {
+            $this->plotareaClass->{$name}(...$arguments);
+            $this->placePlotarea();
+            return $this;
+        } 
+        throw new \Exception("Call to Undefined method {$name}.");
     }
 
     /**
@@ -61,6 +84,8 @@ class Canvas
             'fontPath',
             'fontSize',
             'fontColor',
+            'defaultPlotareaRateX',
+            'defaultPlotareaRateY',
         ];
         foreach ($props as $prop) {
             $this->{$prop} = Config::get('props.' . $prop);
@@ -72,13 +97,15 @@ class Canvas
      */
     private function setDefaultPlotarea(): void
     {
+        $rateX = $this->defaultPlotareaRateX;
+        $rateY = $this->defaultPlotareaRateY;
         $this->plotarea = [
             'offset' => [
-                round($this->size['width'] * 0.1),
-                round($this->size['height'] * 0.1),
+                round($this->size['width']  * (1 - $rateX) / 2),
+                round($this->size['height'] * (1 - $rateY) / 2),
             ],
-            'width' => round($this->size['width'] * 0.8),
-            'height' => round($this->size['height'] * 0.8),
+            'width'  => round($this->size['width']  * $rateX),
+            'height' => round($this->size['height'] * $rateY),
         ];
     }
 
@@ -99,44 +126,13 @@ class Canvas
         return $this;
     }
 
-    /**
-     * resizes the canvas size
-     * @param   int $width  specify in pix at least 50
-     * @param   int $height specify in pix at least 50
-     * @return  self
-     * @thrown  \Exception
-     */
-    public function resize(int $width, int $height)
+    private function placePlotarea()
     {
-        if ($width < $this->CANVAS_WIDTH_LIMIT_LOWER) {
-            throw new \Exception(
-                "width is below the lower limit "
-                . $this->CANVAS_WIDTH_LIMIT_LOWER
-            );
-        }
-        if ($height < $this->CANVAS_HEIGHT_LIMIT_LOWER) {
-            throw new \Exception(
-                "height is below the lower limit "
-                . $this->CANVAS_HEIGHT_LIMIT_LOWER
-            );
-        }
-        $this->canvasWidth = $width;
-        $this->canvasHeight = $height;
-        return $this;
-    }
-
-    /**
-     * clears the canvas
-     *
-     * @return  Canvas
-     */
-    public function clear()
-    {
-        return new Canvas(
-            size: $this->size,
-            viewport: $this->viewport,
-            plotarea: $this->plotarea,
-            backgroundColor: $this->backgroundColor,
+        $this->image->place(
+            element: $this->plotareaClass->getImage(),
+            position: 'top-left',
+            offset_x: $this->plotarea['offset'][0],
+            offset_y: $this->plotarea['offset'][1],
         );
     }
 
