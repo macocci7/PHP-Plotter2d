@@ -36,8 +36,9 @@ trait DrawerTrait
      * @param   int     $y1
      * @param   int     $x2
      * @param   int     $y2
-     * @param   int     $width
-     * @param   string  $color
+     * @param   int     $width = 1
+     * @param   string  $color = '#000000'
+     * @param   int[]   $dash = []
      * @return  self
      */
     public function drawLine(
@@ -45,9 +46,22 @@ trait DrawerTrait
         int $y1,
         int $x2,
         int $y2,
-        int $width,
-        string $color,
+        int $width = 1,
+        string $color = '#000000',
+        array $dash = [],
     ) {
+        if (count($dash) > 0) {
+            $this->drawDashedLine(
+                $x1,
+                $y1,
+                $x2,
+                $y2,
+                $width,
+                $color,
+                $dash,
+            );
+            return $this;
+        }
         $this->image->drawLine(
             function (
                 LineFactory $line
@@ -65,6 +79,79 @@ trait DrawerTrait
                 $line->width($width);
             }
         );
+        return $this;
+    }
+
+    /**
+     * draws a dashed line
+     *
+     * @param   int     $x1
+     * @param   int     $y1
+     * @param   int     $x2
+     * @param   int     $y2
+     * @param   int     $width = 1
+     * @param   string  $color = '#000000'
+     * @param   int[]   $dash = [1, 1]
+     * @return  self
+     */
+    public function drawDashedLine(
+        int $x1,
+        int $y1,
+        int $x2,
+        int $y2,
+        int $width = 1,
+        string $color = '#000000',
+        array $dash = [1, 1],
+    ) {
+        $m = ($y2 - $y1) / ($x2 - $x1);
+        $goal = sqrt(($x2 - $x1) ** 2 + ($y2 - $y1) ** 2);
+        $dashCount = count($dash);
+        $i = 0;
+        $l = 0;
+        while ($l <= $goal) {
+            // calculate only when $i is even
+            if (($i % 2) === 0) {
+                // start point
+                $dx = $l * sqrt(      1 / (1 + $m ** 2));
+                $dy = $l * sqrt($m ** 2 / (1 + $m ** 2));
+                $x3 = $x1 + $dx;
+                $y3 = $y1 + $dy;
+            }
+
+            // total length
+            $i = $i % $dashCount;
+            $l +=$dash[$i];
+
+            if (($i % 2) === 0) {
+                // end point
+                $dx = $l * sqrt(1 / (1 + $m ** 2));
+                $dy = $l * sqrt($m ** 2 / (1 + $m ** 2));
+                $x4 = $x1 + $dx;
+                $y4 = $y1 + $dy;
+
+                echo "{$i}, {$l}:({$x3}, {$y3}) - ({$x4}, {$y4})" . PHP_EOL;
+                // draws a line only when $i is even
+                $this->image->drawLine(
+                    function (
+                        LineFactory $line
+                    ) use (
+                        $x3,
+                        $y3,
+                        $x4,
+                        $y4,
+                        $color,
+                        $width,
+                    ) {
+                        $line->from($x3, $y3);
+                        $line->to($x4, $y4);
+                        $line->color($color);
+                        $line->width($width);
+                    }
+                );
+            }
+
+            ++$i;
+        }
         return $this;
     }
 

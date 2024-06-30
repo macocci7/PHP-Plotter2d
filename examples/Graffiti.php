@@ -4,7 +4,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Macocci7\PhpPlotter2d\Plotter;
 
-$plotter = Plotter::make(
+// Creating Instance of Macocci7\PhpPlotter2d\Canvas
+$canvas = Plotter::make(
     canvasSize: [
         'width' => 800,     // required
         'height' => 600,    // required
@@ -24,11 +25,9 @@ $plotter = Plotter::make(
     */
     backgroundColor: '#0000cc',  // optional, default='#ffffff'
 );
-$plotter
+$canvas
     // plotting inside the plotarea
     ->plotBox(-8, 5, 8, -5, '#cccccc', 2, '#009900')
-    ->plotAxisX()
-    ->plotAxisY()
     ->plotPixel(5, -4.5, '#ff0000')
     ->plotLine(-8, -5, 8, 5, 2, '#ff6600', )
     ->plotCircle(0, 0, 3.6, '#ff9999', 2, '#ff0000')
@@ -56,8 +55,19 @@ $plotter
         borderColor: '#009900',
     )
     ->plotFill(0.5, -2.5, '#ffffff')
+    ->plotLine(-8, 5, 8, -5, 1, '#0000ff', dash: [8, 4, 2, 4])
+    ->plotLine(-8, -2.8, 8, -2.8, 1, '#009900', dash: [8, 4, 2, 4])
     ->plotText("Hi, guys! How's it going with you, today?", -7, 3, 32, '', '#006600')
-    // drawing outside the plotarea
+    ->plotGridHorizon()
+    ->plotGridVertical()
+    ->plotGridValuesX()
+    ->plotGridValuesY()
+    ->plotAxisX()
+    ->plotAxisY()
+    ->plotAxisLabelX('x', 16, '#000000', 'lower')
+    ->plotAxisLabelY('y', 16, '#000000', 'left')
+    ->plotAxisLabelO('O', 16, '#000000', 3)
+    // drawing on the canvas, not just in the plotarea
     ->drawPolygon(
         points: [
             [-20, 20],

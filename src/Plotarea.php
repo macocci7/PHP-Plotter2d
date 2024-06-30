@@ -10,8 +10,10 @@ class Plotarea
 {
     use Traits\AxisTrait;
     use Traits\DrawerTrait;
+    use Traits\GridTrait;
     use Traits\JudgeTrait;
     use Traits\PlotterTrait;
+    use Traits\ScaleTrait;
 
     protected int $CANVAS_WIDTH_LIMIT_LOWER;
     protected int $CANVAS_HEIGHT_LIMIT_LOWER;

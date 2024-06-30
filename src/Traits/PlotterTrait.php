@@ -31,6 +31,7 @@ trait PlotterTrait
      * @param   int|float   $y2
      * @param   int         $width = 1
      * @param   string|null $color = '#000000'
+     * @param   int[]       $dash = []
      * @return  self
      */
     public function plotLine(
@@ -40,6 +41,7 @@ trait PlotterTrait
         int|float $y2,
         int $width = 1,
         string $color = '#000000',
+        array $dash = [],
     ) {
         $from = $this->transformer->getCoord($x1, $y1);
         $to = $this->transformer->getCoord($x2, $y2);
@@ -50,6 +52,7 @@ trait PlotterTrait
             $to['y'],
             $width,
             $color,
+            $dash,
         );
         return $this;
     }
