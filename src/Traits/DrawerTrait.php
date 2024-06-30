@@ -129,7 +129,6 @@ trait DrawerTrait
                 $x4 = $x1 + $dx;
                 $y4 = $y1 + $dy;
 
-                echo "{$i}, {$l}:({$x3}, {$y3}) - ({$x4}, {$y4})" . PHP_EOL;
                 // draws a line only when $i is even
                 $this->image->drawLine(
                     function (

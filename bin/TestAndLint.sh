@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 # Script to Test and Lint
-# - for the repository: macocci7/php-frequency-table
+# - for the repository: macocci7/php-plotter2d
 # requirement:
 # - phpenv/phpenv
 # - PHP versions defined in ../PHP_VERSIONS installed

@@ -61,8 +61,8 @@ class Transformer
         $rateY = $this->getRateY() * (-1);
         $dx = $x - $this->viewport['x'][0];
         $dy = $y - $this->viewport['y'][0];
-        $cx = round($dx * $rateX);
-        $cy = round($dy * $rateY) + $hPA;
+        $cx = (int) round($dx * $rateX);
+        $cy = (int) round($dy * $rateY) + $hPA;
         return [
             'x' => $cx,
             'y' => $cy,
