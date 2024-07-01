@@ -7,10 +7,10 @@ class Plotter
     /**
      * constructor
      *
-     * @param   array<string, int>  $canvasSize
-     * @param   array<string, int[]>    $viewport
-     * @param   array<string, int|array<int, int>>  $plotarea
-     * @param   string|null $backgroundColor
+     * @param   array<string, int>          $canvasSize
+     * @param   array<string, int[]>        $viewport
+     * @param   array<string, int|int[]>    $plotarea
+     * @param   string|null                 $backgroundColor
      */
     public function __construct(
         private array $canvasSize,
@@ -51,7 +51,7 @@ class Plotter
     ) {
         return (new Plotter(
             $canvasSize,
-            $viewport, 
+            $viewport,
             $plotarea,
             $backgroundColor
         ))

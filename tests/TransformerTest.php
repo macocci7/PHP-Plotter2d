@@ -16,7 +16,7 @@ final class TransformerTest extends TestCase
 {
     protected $viewport = [
         'x' => [-8, 8],
-        'y' => [-5, 5], 
+        'y' => [-5, 5],
     ];
     protected $plotarea = [
         'offset' => [20, 30],

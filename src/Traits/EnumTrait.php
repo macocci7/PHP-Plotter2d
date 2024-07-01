@@ -42,6 +42,12 @@ trait EnumTrait
         return array_column(self::cases(), 'value', 'name');
     }
 
+    /**
+     * returns a case which matches the $value
+     *
+     * @param   string  $value
+     * @return  self|null
+     */
     public static function get(string $value)
     {
         foreach (self::cases() as $case) {

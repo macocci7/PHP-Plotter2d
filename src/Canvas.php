@@ -6,6 +6,9 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Interfaces\ImageInterface;
 use Macocci7\PhpPlotter2d\Helpers\Config;
 
+/**
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ */
 class Canvas
 {
     use Traits\DrawerTrait;
@@ -21,7 +24,9 @@ class Canvas
     protected ImageManager $imageManager;
     protected ImageInterface $image;
 
-    protected Plotarea $plogareaClass;
+    protected Plotarea $plotareaClass;
+    protected int|float $defaultPlotareaRateX;
+    protected int|float $defaultPlotareaRateY;
 
     /**
      * constructor
@@ -66,7 +71,7 @@ class Canvas
             $this->plotareaClass->{$name}(...$arguments);
             $this->placePlotarea();
             return $this;
-        } 
+        }
         throw new \Exception("Call to Undefined method {$name}.");
     }
 
@@ -101,11 +106,11 @@ class Canvas
         $rateY = $this->defaultPlotareaRateY;
         $this->plotarea = [
             'offset' => [
-                round($this->size['width']  * (1 - $rateX) / 2),
-                round($this->size['height'] * (1 - $rateY) / 2),
+                (int) round($this->size['width']  * (1 - $rateX) / 2),
+                (int) round($this->size['height'] * (1 - $rateY) / 2),
             ],
-            'width'  => round($this->size['width']  * $rateX),
-            'height' => round($this->size['height'] * $rateY),
+            'width'  => (int) round($this->size['width']  * $rateX),
+            'height' => (int) round($this->size['height'] * $rateY),
         ];
     }
 
@@ -126,7 +131,11 @@ class Canvas
         return $this;
     }
 
-    private function placePlotarea()
+    /**
+     * places(overwrites) the plotarea on the canvas
+     *
+     */
+    private function placePlotarea(): void
     {
         $this->image->place(
             element: $this->plotareaClass->getImage(),
