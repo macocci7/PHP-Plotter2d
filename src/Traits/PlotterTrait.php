@@ -30,7 +30,7 @@ trait PlotterTrait
      * @param   int|float   $x2
      * @param   int|float   $y2
      * @param   int         $width = 1
-     * @param   string|null $color = '#000000'
+     * @param   string      $color = '#000000'
      * @param   int[]       $dash = []
      * @return  self
      */
@@ -70,12 +70,12 @@ trait PlotterTrait
      * @return  self
      */
     public function plotBox(
-        int|float   $x1,
-        int|float   $y1,
-        int|float   $x2,
-        int|float   $y2,
+        int|float $x1,
+        int|float $y1,
+        int|float $x2,
+        int|float $y2,
         string|null $backgroundColor = null,
-        int         $borderWidth = 1,
+        int $borderWidth = 1,
         string|null $borderColor = '#000000',
     ) {
         $from = $this->transformer->getCoord($x1, $y1);
@@ -97,18 +97,18 @@ trait PlotterTrait
      *
      * @param   int|float   $x
      * @param   int|float   $y
-     * @param   int|float   $rardius
+     * @param   int|float   $radius
      * @param   string|null $backgroundColor = null
      * @param   int         $borderWidth = 1
      * @param   string|null $borderColor = '#000000'
      * @return  self
      */
     public function plotCircle(
-        int|float   $x,
-        int|float   $y,
-        int|float   $radius,
+        int|float $x,
+        int|float $y,
+        int|float $radius,
         string|null $backgroundColor = null,
-        int         $borderWidth = 1,
+        int $borderWidth = 1,
         string|null $borderColor = '#000000',
     ) {
         $center = $this->transformer->getCoord($x, $y);
@@ -139,12 +139,12 @@ trait PlotterTrait
      * @return  self
      */
     public function plotEllipse(
-        int|float   $x,
-        int|float   $y,
-        int|float   $width,
-        int|float   $height,
+        int|float $x,
+        int|float $y,
+        int|float $width,
+        int|float $height,
         string|null $backgroundColor = null,
-        int         $borderWidth = 1,
+        int $borderWidth = 1,
         string|null $borderColor = '#000000',
     ) {
         $coord = $this->transformer->getCoord($x, $y);
@@ -222,7 +222,7 @@ trait PlotterTrait
      * @param   string  $fontPath = ''
      * @param   string  $fontColor = ''
      * @param   string  $align = 'left'
-     * @param   string  $vlign = 'bottom'
+     * @param   string  $valign = 'bottom'
      * @return  self
      */
     public function plotText(

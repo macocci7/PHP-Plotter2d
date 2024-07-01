@@ -28,9 +28,9 @@ trait ScaleTrait
             $coord = $this->transformer->getCoord($x, 0);
             $this->drawLine(
                 $coord['x'],
-                $coord['y'] - round($length / 2),
+                $coord['y'] - (int) round($length / 2),
                 $coord['x'],
-                $coord['y'] + round($length / 2),
+                $coord['y'] + (int) round($length / 2),
                 $width,
                 $color,
             );
@@ -62,9 +62,9 @@ trait ScaleTrait
         while ($y <= $yMax) {
             $coord = $this->transformer->getCoord(0, $y);
             $this->drawLine(
-                $coord['x'] - round($length / 2),
+                $coord['x'] - (int) round($length / 2),
                 $coord['y'],
-                $coord['x'] + round($length / 2),
+                $coord['x'] + (int) round($length / 2),
                 $coord['y'],
                 $width,
                 $color,

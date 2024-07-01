@@ -22,7 +22,7 @@ $canvas = Plotter::make(
 $canvas
     // plotting inside the plotarea
     ->plotBox(-8, 5, 8, -5, '#dddddd', 0)
-    ->plotLine(-8, -5, 8, 5, 2, '#0000ff', )
+    ->plotLine(-8, -5, 8, 5, 2, '#0000ff')
     ->plotText("y = (8/5)x", 2, 4, 24)
     ->plotGridValuesX()
     ->plotGridValuesY()

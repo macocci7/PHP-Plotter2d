@@ -14,8 +14,8 @@ class Transformer
     /**
      * constructor
      *
-     * @param   array<string, int|float>    $viewport
-     * @param   array<string, int>          $plotarea
+     * @param   array<string, array<int, int|float>>    $viewport
+     * @param   array<string, int>                      $plotarea
      */
     public function __construct(
         protected array $viewport,
@@ -93,7 +93,7 @@ class Transformer
      */
     public function getSpanX(int|float $span)
     {
-        return round($span * $this->getRateX());
+        return (int) round($span * $this->getRateX());
     }
 
     /**
@@ -104,6 +104,6 @@ class Transformer
      */
     public function getSpanY(int|float $span)
     {
-        return round($span * $this->getRateY());
+        return (int) round($span * $this->getRateY());
     }
 }

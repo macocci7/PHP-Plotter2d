@@ -70,7 +70,7 @@ trait AxisTrait
         string $label = 'x',
         int $size = 16,
         string $color = '#000000',
-        string $position = Position::Lower->value,
+        string $position = 'lower',
         string $fontPath = '',
     ) {
         $coord = $this->transformer->getCoord($this->viewport['x'][1], 0);
@@ -114,7 +114,7 @@ trait AxisTrait
         string $label = 'y',
         int $size = 16,
         string $color = '#000000',
-        string $position = Position::Left->value,
+        string $position = 'left',
         string $fontPath = '',
     ) {
         $coord = $this->transformer->getCoord(0, $this->viewport['y'][1]);

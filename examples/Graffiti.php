@@ -29,7 +29,7 @@ $canvas
     // plotting inside the plotarea
     ->plotBox(-8, 5, 8, -5, '#cccccc', 2, '#009900')
     ->plotPixel(5, -4.5, '#ff0000')
-    ->plotLine(-8, -5, 8, 5, 2, '#ff6600', )
+    ->plotLine(-8, -5, 8, 5, 2, '#ff6600')
     ->plotCircle(0, 0, 3.6, '#ff9999', 2, '#ff0000')
     ->plotEllipse(1.5, -4.8, 4.5, 2.5, '#ccccff', 2, '#000099')
     ->plotPolygon(

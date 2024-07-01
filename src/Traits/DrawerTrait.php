@@ -112,7 +112,7 @@ trait DrawerTrait
             // calculate only when $i is even
             if (($i % 2) === 0) {
                 // start point
-                $dx = $l * sqrt(      1 / (1 + $m ** 2));
+                $dx = $l * sqrt(1       / (1 + $m ** 2));
                 $dy = $l * sqrt($m ** 2 / (1 + $m ** 2));
                 $x3 = $x1 + $dx;
                 $y3 = $y1 + $dy;
@@ -120,7 +120,7 @@ trait DrawerTrait
 
             // total length
             $i = $i % $dashCount;
-            $l +=$dash[$i];
+            $l += $dash[$i];
 
             if (($i % 2) === 0) {
                 // end point
@@ -134,15 +134,15 @@ trait DrawerTrait
                     function (
                         LineFactory $line
                     ) use (
-                        $x3,
-                        $y3,
+                        $x3,    // @phpstan-ignore-line
+                        $y3,    // @phpstan-ignore-line
                         $x4,
                         $y4,
                         $color,
                         $width,
                     ) {
-                        $line->from($x3, $y3);
-                        $line->to($x4, $y4);
+                        $line->from($x3, $y3);  // @phpstan-ignore-line
+                        $line->to($x4, $y4);    // @phpstan-ignore-line
                         $line->color($color);
                         $line->width($width);
                     }
@@ -283,6 +283,7 @@ trait DrawerTrait
      * @param   string|null                 $backgroundColor = null
      * @param   int                         $borderWidth = 1
      * @param   string|null                 $borderColor = '#000000'
+     * @return  self
      */
     public function drawPolygon(
         array $points,

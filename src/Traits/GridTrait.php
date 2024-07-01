@@ -81,10 +81,11 @@ trait GridTrait
      * @param   int|float   $interval
      * @return  int|float
      */
-    protected function roundGridInterval(int|float $interval) {
+    protected function roundGridInterval(int|float $interval)
+    {
         $pow10 = pow(10, floor(log10($interval)));
         $fraction = $interval / $pow10;
-    
+
         if ($fraction < 1.5) {
             return 1 * $pow10;
         } elseif ($fraction < 3) {
@@ -128,7 +129,7 @@ trait GridTrait
         int $size = 16,
         string $color = '#666666',
         string $fontPath = '',
-        string $position = Position::Lower->value,
+        string $position = 'lower',
         array $except = [0],
     ) {
         list($xMin, $xMax) = $this->viewport['x'];
@@ -145,7 +146,7 @@ trait GridTrait
             $this->drawText(
                 text: (string) $x,
                 x: $coord['x'],
-                y: $coord['y'] + (match (Position::get($position)) {
+                y: $coord['y'] + (int) (match (Position::get($position)) {
                     Position::Upper => - round($this->gridLabelOffsetY / 2),
                     default => round($this->gridLabelOffsetY / 2),
                 }),
@@ -179,7 +180,7 @@ trait GridTrait
         int $size = 16,
         string $color = '#666666',
         string $fontPath = '',
-        string $position = Position::Left->value,
+        string $position = 'left',
         array $except = [0],
     ) {
         list($yMin, $yMax) = $this->viewport['y'];
@@ -195,7 +196,7 @@ trait GridTrait
             $coord = $this->transformer->getCoord(0, $y);
             $this->drawText(
                 text: (string) $y,
-                x: $coord['x'] + (match (Position::get($position)) {
+                x: $coord['x'] + (int) (match (Position::get($position)) {
                     Position::Right => round($this->gridLabelOffsetX / 2),
                     default => - round($this->gridLabelOffsetX / 2),
                 }),
