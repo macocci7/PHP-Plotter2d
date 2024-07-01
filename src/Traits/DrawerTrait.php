@@ -51,7 +51,7 @@ trait DrawerTrait
         array $dash = [],
     ) {
         if (count($dash) > 0) {
-            $this->drawDashedLine(
+            return $this->drawDashedLine(
                 $x1,
                 $y1,
                 $x2,
@@ -60,7 +60,6 @@ trait DrawerTrait
                 $color,
                 $dash,
             );
-            return $this;
         }
         $this->image->drawLine(
             function (
@@ -112,8 +111,8 @@ trait DrawerTrait
             // calculate only when $i is even
             if (($i % 2) === 0) {
                 // start point
-                $dx = $l * sqrt(1       / (1 + $m ** 2));
-                $dy = $l * sqrt($m ** 2 / (1 + $m ** 2));
+                $dx = $l * sqrt(1 / (1 + $m ** 2));
+                $dy = $l * sqrt(1 / (1 + $m ** 2)) * $m;
                 $x3 = $x1 + $dx;
                 $y3 = $y1 + $dy;
             }
@@ -125,7 +124,7 @@ trait DrawerTrait
             if (($i % 2) === 0) {
                 // end point
                 $dx = $l * sqrt(1 / (1 + $m ** 2));
-                $dy = $l * sqrt($m ** 2 / (1 + $m ** 2));
+                $dy = $l * sqrt(1 / (1 + $m ** 2)) * $m;
                 $x4 = $x1 + $dx;
                 $y4 = $y1 + $dy;
 

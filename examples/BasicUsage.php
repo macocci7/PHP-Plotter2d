@@ -11,8 +11,8 @@ $canvas = Plotter::make(
         'height' => 600,    // required
     ],
     viewport: [
-        'x' => [-8, 8],     // required
-        'y' => [-5, 5],     // required
+        'x' => [-8, 8],     // optional
+        'y' => [-5, 5],     // optional
     ],
 );
 
@@ -24,13 +24,16 @@ $canvas
     ->plotBox(-8, 5, 8, -5, '#dddddd', 0)
     ->plotLine(-8, -5, 8, 5, 2, '#0000ff')
     ->plotText("y = (8/5)x", 2, 4, 24)
+    // Grids
     ->plotGridValuesX()
     ->plotGridValuesY()
+    // Axis
     ->plotAxisX()
     ->plotAxisY()
     ->plotAxisLabelO(size: 24, quadrant: 4)
     ->plotAxisLabelX(size: 24)
     ->plotAxisLabelY(size: 24)
+    // Scales
     ->plotScaleX()
     ->plotScaleY()
     // drawing outside the plotarea
