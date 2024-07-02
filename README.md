@@ -168,6 +168,7 @@ draws a box.
 |$backgroundColor|string\|null||`null`|'#ccffff'|background color (in hex format)|
 |$borderWidth|int||1|2|border width (in pixel)|
 |$borderColor|string\|null||'#000000'|'#0000ff'|border color (in hex format)|
+|$dash|int[]||[]|[8, 4, 2, 4]|dash pattern (solid and blank)|
 
 #### drawCircle()
 
@@ -360,6 +361,7 @@ polots a box within the `Plotarea`.
 |$backgroundColor|string\|null||`null`|'#cccccc'|background color (in hex format)|
 |$borderWidth|int||1|2|border width (in pixel)|
 |$borderColor|string\|null||'#000000'|'#0000ff'|border color (in hex format)|
+|$dash|int[]||[]|[8, 4, 2, 4]|dash pattern (solid and blank)|
 
 #### plotCircle()
 

@@ -67,6 +67,7 @@ trait PlotterTrait
      * @param   string|null $backgroundColor = null
      * @param   int         $borderWidth = 1
      * @param   string|null $backgroundColor = '#000000'
+     * @param   int[]       $dash = []
      * @return  self
      */
     public function plotBox(
@@ -77,6 +78,7 @@ trait PlotterTrait
         string|null $backgroundColor = null,
         int $borderWidth = 1,
         string|null $borderColor = '#000000',
+        array $dash = [],
     ) {
         $from = $this->transformer->getCoord($x1, $y1);
         $to   = $this->transformer->getCoord($x2, $y2);
@@ -88,6 +90,7 @@ trait PlotterTrait
             $backgroundColor,
             $borderWidth,
             $borderColor,
+            $dash,
         );
         return $this;
     }

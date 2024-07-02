@@ -29,6 +29,7 @@ $canvas
     // dashed line
     ->plotLine(-4, -4, 6, 0, 1, '#ff0000', [8, 4, 2, 4])
     ->plotBox(4, 3, 6, 2, '#ffffcc', 1, '#0000ff')
+    ->plotBox(0.5, 4.5, 2.5, 3.5, '#ffcccc', 1, '#ff0000', [8, 4, 2, 4])
     ->plotCircle(5, -2.5, 1.5, '#ccccff', 1, '#0000ff')
     ->plotEllipse(-3, 4.5, 1.5, 3, '#ffccff', 1, '#ff00ff')
     ->plotPolygon(
@@ -44,5 +45,5 @@ $canvas
         borderColor: '#009900',
     )
     ->plotText('y = x', 3, 5, 24)
-    ->drawText('Ploting within the Plotarea', 90, 20, 34, '', '#333333', 'left', 'top')
+    ->drawText('Plotting within the Plotarea', 90, 20, 34, '', '#333333', 'left', 'top')
     ->save('img/PlotWithinPlotarea.png');
