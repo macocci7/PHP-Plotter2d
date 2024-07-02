@@ -11,6 +11,7 @@ $canvas = Plotter::make(
     ],
 );
 
+$fontPath = '/usr/share/fonts/truetype/freefont/FreeSansBoldOblique.ttf';
 $canvas
     ->fill(10, 10, '#ddeeff')
     ->drawPixel(380, 50, '#ff0000')
@@ -33,5 +34,5 @@ $canvas
         borderWidth: 2,
         borderColor: '#009900',
     )
-    ->drawText('PLOTTER2D', 60, 60, fontColor: '#666666', fontSize: 48, fontPath: '/usr/share/fonts/truetype/freefont/FreeSansBoldOblique.ttf')
+    ->drawText('PLOTTER2D', 60, 60, fontColor: '#666666', fontSize: 48, fontPath: $fontPath)
     ->save('img/DrawOnCanvas.png');

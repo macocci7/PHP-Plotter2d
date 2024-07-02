@@ -92,6 +92,8 @@ trait DrawerTrait
      * @param   string  $color = '#000000'
      * @param   int[]   $dash = [1, 1]
      * @return  self
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function drawDashedLine(
         int $x1,
@@ -103,7 +105,7 @@ trait DrawerTrait
         array $dash = [1, 1],
     ) {
         $cX = ($x2 - $x1) == 0 ? 0 : ($x1 < $x2 ? 1 : -1);
-        $cY = ($y2 - $y2) == 0 ? 0 : ($y1 < $y2 ? 1 : -1); 
+        $cY = ($y2 - $y2) == 0 ? 0 : ($y1 < $y2 ? 1 : -1);
         $m = $cX === 0 ? null : ($y2 - $y1) / ($x2 - $x1);
         $goal = sqrt(($x2 - $x1) ** 2 + ($y2 - $y1) ** 2);
         $dashCount = count($dash);
