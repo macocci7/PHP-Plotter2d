@@ -105,18 +105,18 @@ trait DrawerTrait
         array $dash = [1, 1],
     ) {
         $cX = ($x2 - $x1) == 0 ? 0 : ($x1 < $x2 ? 1 : -1);
-        $cY = ($y2 - $y2) == 0 ? 0 : ($y1 < $y2 ? 1 : -1);
+        $cY = $y1 < $y2 ? 1 : -1;
         $m = $cX === 0 ? null : ($y2 - $y1) / ($x2 - $x1);
-        $goal = sqrt(($x2 - $x1) ** 2 + ($y2 - $y1) ** 2);
+        $goal = (int) round(sqrt(($x2 - $x1) ** 2 + ($y2 - $y1) ** 2));
         $dashCount = count($dash);
         $i = 0;
         $l = 0;
-        while ($l <= $goal) {
+        while ($l < $goal) {
             // calculate only when $i is even
             if (($i % 2) === 0) {
                 // start point
-                $dx = is_null($m) ? 0  : $cX * $l * sqrt(1 / (1 + $m ** 2));
-                $dy = is_null($m) ? $l : $cY * $l * sqrt(1 / (1 + $m ** 2)) * $m;
+                $dx = is_null($m) ? 0        : $l * sqrt(1 / (1 + $m ** 2)) * $cX;
+                $dy = is_null($m) ? $l * $cY : $l * sqrt(1 / (1 + $m ** 2)) * $m;
                 $x3 = $x1 + $dx;
                 $y3 = $y1 + $dy;
             }
@@ -124,11 +124,14 @@ trait DrawerTrait
             // total length
             $i = $i % $dashCount;
             $l += $dash[$i];
+            if ($l > $goal) {
+                $l = $goal;
+            }
 
             if (($i % 2) === 0) {
                 // end point
-                $dx = is_null($m) ? 0  : $cX * $l * sqrt(1 / (1 + $m ** 2));
-                $dy = is_null($m) ? $l : $cY * $l * sqrt(1 / (1 + $m ** 2)) * $m;
+                $dx = is_null($m) ? 0        : $l * sqrt(1 / (1 + $m ** 2)) * $cX;
+                $dy = is_null($m) ? $l * $cY : $l * sqrt(1 / (1 + $m ** 2)) * $m;
                 $x4 = $x1 + $dx;
                 $y4 = $y1 + $dy;
 
@@ -167,6 +170,7 @@ trait DrawerTrait
      * @param   string|null $backgroundColor = null
      * @param   int         $borderWidth = 1
      * @param   string|null $borderColor = '#000000'
+     * @param   int[]       $dash = []
      * @return  self
      */
     public function drawBox(
@@ -177,7 +181,20 @@ trait DrawerTrait
         string|null $backgroundColor = null,
         int $borderWidth = 1,
         string|null $borderColor = '#000000',
+        array $dash = [],
     ) {
+        if (count($dash) > 0) {
+            return $this->drawDashedBox(
+                $x1,
+                $y1,
+                $x2,
+                $y2,
+                $backgroundColor,
+                $borderWidth,
+                $borderColor,
+                $dash,
+            );
+        }
         $width  = abs($x2 - $x1) + 1;
         $height = abs($y2 - $y1) + 1;
         $this->image->drawRectangle(
@@ -196,6 +213,93 @@ trait DrawerTrait
                 $rectangle->background($backgroundColor);
                 $rectangle->border($borderColor, $borderWidth);
             }
+        );
+        return $this;
+    }
+
+    /**
+     * draws a dashed box
+     *
+     * @param   int         $x1
+     * @param   int         $y1
+     * @param   int         $x2
+     * @param   int         $y2
+     * @param   string|null $backgroundColor = null
+     * @param   int         $borderWidth = 1
+     * @param   string|null $borderColor = '#000000'
+     * @param   int[]       $dash = []
+     * @return  self
+     */
+    public function drawDashedBox(
+        int $x1,
+        int $y1,
+        int $x2,
+        int $y2,
+        string|null $backgroundColor = null,
+        int $borderWidth = 1,
+        string|null $borderColor = '#000000',
+        array $dash = [],
+    ) {
+        // background
+        $width  = abs($x2 - $x1) + 1;
+        $height = abs($y2 - $y1) + 1;
+        $this->image->drawRectangle(
+            $x1,
+            $y1,
+            function (
+                RectangleFactory $rectangle
+            ) use (
+                $width,
+                $height,
+                $backgroundColor,
+            ) {
+                $rectangle->size($width, $height);
+                $rectangle->background($backgroundColor);
+            }
+        );
+
+        // top side
+        $this->drawDashedLine(
+            $x1,
+            $y1,
+            $x2,
+            $y1,
+            $borderWidth,
+            $borderColor,
+            $dash,
+        );
+
+        // right side
+        $this->drawDashedLine(
+            $x2,
+            $y1,
+            $x2,
+            $y2,
+            $borderWidth,
+            $borderColor,
+            $dash,
+        );
+
+        // bottom side
+        $this->drawDashedLine(
+            $x2,
+            $y2,
+            $x1,
+            $y2,
+            $borderWidth,
+            $borderColor,
+            $dash,
+        );
+
+        // left side
+        $this->drawDashedLine(
+            $x1,
+            $y2,
+            $x1,
+            $y1,
+            $borderWidth,
+            $borderColor,
+            $dash,
         );
         return $this;
     }
