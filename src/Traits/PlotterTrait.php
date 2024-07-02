@@ -215,20 +215,20 @@ trait PlotterTrait
     /**
      * plots a text on the plotarea
      *
-     * @param   string  $text
-     * @param   int     $x
-     * @param   int     $y
-     * @param   int     $fontSize = 0
-     * @param   string  $fontPath = ''
-     * @param   string  $fontColor = ''
-     * @param   string  $align = 'left'
-     * @param   string  $valign = 'bottom'
+     * @param   string      $text
+     * @param   int|float   $x
+     * @param   int|float   $y
+     * @param   int         $fontSize = 0
+     * @param   string      $fontPath = ''
+     * @param   string      $fontColor = ''
+     * @param   string      $align = 'left'
+     * @param   string      $valign = 'bottom'
      * @return  self
      */
     public function plotText(
         string $text,
-        int $x,
-        int $y,
+        int|float $x,
+        int|float $y,
         int $fontSize = 0,
         string $fontPath = '',
         string $fontColor = '',
@@ -237,14 +237,14 @@ trait PlotterTrait
     ) {
         $pos = $this->transformer->getCoord($x, $y);
         $this->drawText(
-            $text,
-            $pos['x'],
-            $pos['y'],
-            $fontSize,
-            $fontPath,
-            $fontColor,
-            $align,
-            $valign,
+            text: $text,
+            x: $pos['x'],
+            y: $pos['y'],
+            fontSize: $fontSize,
+            fontPath: $fontPath,
+            fontColor: $fontColor,
+            align: $align,
+            valign: $valign,
         );
         return $this;
     }

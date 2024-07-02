@@ -102,7 +102,9 @@ trait DrawerTrait
         string $color = '#000000',
         array $dash = [1, 1],
     ) {
-        $m = ($y2 - $y1) / ($x2 - $x1);
+        $cX = ($x2 - $x1) == 0 ? 0 : ($x1 < $x2 ? 1 : -1);
+        $cY = ($y2 - $y2) == 0 ? 0 : ($y1 < $y2 ? 1 : -1); 
+        $m = $cX === 0 ? null : ($y2 - $y1) / ($x2 - $x1);
         $goal = sqrt(($x2 - $x1) ** 2 + ($y2 - $y1) ** 2);
         $dashCount = count($dash);
         $i = 0;
@@ -111,8 +113,8 @@ trait DrawerTrait
             // calculate only when $i is even
             if (($i % 2) === 0) {
                 // start point
-                $dx = $l * sqrt(1 / (1 + $m ** 2));
-                $dy = $l * sqrt(1 / (1 + $m ** 2)) * $m;
+                $dx = is_null($m) ? 0  : $cX * $l * sqrt(1 / (1 + $m ** 2));
+                $dy = is_null($m) ? $l : $cY * $l * sqrt(1 / (1 + $m ** 2)) * $m;
                 $x3 = $x1 + $dx;
                 $y3 = $y1 + $dy;
             }
@@ -123,8 +125,8 @@ trait DrawerTrait
 
             if (($i % 2) === 0) {
                 // end point
-                $dx = $l * sqrt(1 / (1 + $m ** 2));
-                $dy = $l * sqrt(1 / (1 + $m ** 2)) * $m;
+                $dx = is_null($m) ? 0  : $cX * $l * sqrt(1 / (1 + $m ** 2));
+                $dy = is_null($m) ? $l : $cY * $l * sqrt(1 / (1 + $m ** 2)) * $m;
                 $x4 = $x1 + $dx;
                 $y4 = $y1 + $dy;
 
