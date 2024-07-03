@@ -292,7 +292,7 @@ To plot figures within the `Plotarea`, ceate an instance of `Canvas` with the pa
 
 `viewport` is the definition of the visible area of the xy-plane, which consists of arrays of x and y ranges.
 
-`plotarea` has three attributes: `offset`, `width` and `height`.
+`plotarea` has four attributes: `offset`, `width`, `height` and `backgroundColor`.
 
 ```php
 <?php
@@ -316,6 +316,7 @@ $canvas = Plotter::make(
         'offset' => [20, 30],
         'width' => 640, // in pix, default=(80% of the canvas)
         'height' => 360 // in pix, default=(80% of the canvas)
+        'backgroundColor' => '#dddddd', // defautl='#ffffff'
     ],
     backgroundColor: '#0000cc',  // optional, default='#ffffff'
 );
