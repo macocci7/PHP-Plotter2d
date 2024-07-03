@@ -22,6 +22,8 @@ $canvas
     ->drawBox(30, 10, 370, 70, '#ffffff', 2, '#0000ff')
     ->drawCircle(50, 250, 20, '#ccccff', 2, '#000099')
     ->drawEllipse(200, 190, 40, 70, '#ffccff', 2, '#ff66ff')
+    ->drawArc(50, 250, 80, 10, 75, '#ff9999', 1, '#ff0000', true)
+    ->drawEllipticalArc(200, 280, 240, 120, 10, 55, '#cc99ff', 1, '#cc00ff', true)
     ->drawPolygon(
         points: [[340, 60], [250, 220], [290, 80], [310, 200]],
         backgroundColor: '#ffff66',

@@ -197,6 +197,48 @@ trait PlotterTrait
     }
 
     /**
+     * plots an arc
+     *
+     * @param   int|float   $x
+     * @param   int|float   $y
+     * @param   int|float   $radius
+     * @param   int|float   $degrees1
+     * @param   int|float   $degrees2
+     * @param   string|null $backgroundColor = null
+     * @param   int         $borderWidth = 1
+     * @param   string|null $borderColor = '#000000'
+     * @param   bool        $withSides = false
+     * @return  self
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     */
+    public function plotArc(
+        int|float $x,
+        int|float $y,
+        int|float $radius,
+        int|float $degrees1,
+        int|float $degrees2,
+        string|null $backgroundColor = null,
+        int $borderWidth = 1,
+        string|null $borderColor = '#000000',
+        bool $withSides = false,
+    ) {
+        $coord = $this->transformer->getCoord($x, $y);
+        $this->drawEllipticalArc(
+            x: $coord['x'],
+            y: $coord['y'],
+            width: $this->transformer->getSpanX($radius * 2),
+            height: $this->transformer->getSpanY($radius * 2),
+            degrees1: $degrees1,
+            degrees2: $degrees2,
+            backgroundColor: $backgroundColor,
+            borderWidth: $borderWidth,
+            borderColor: $borderColor,
+            withSides: $withSides,
+        );
+        return $this;
+    }
+
+    /**
      * plots a polygon
      *
      * @param   array<int, array<int, int|float>>   $points
@@ -261,6 +303,7 @@ trait PlotterTrait
      * @param   int         $offsetX = 0
      * @param   int         $offsetY = 0
      * @return  self
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function plotText(
         string $text,

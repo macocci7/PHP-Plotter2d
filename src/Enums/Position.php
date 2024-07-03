@@ -17,6 +17,13 @@ enum Position: string
     case Upper = 'upper';
     case Lower = 'lower';
 
+    /**
+     * returns a composit position as text
+     *
+     * @param   string  $align
+     * @param   string  $valign
+     * @return  string|null
+     */
     public static function composit(string $align, string $valign)
     {
         $h = self::get($align);

@@ -115,6 +115,8 @@ Available methods to draw on the `Canvas`:
 - [drawBox()](#drawbox)
 - [drawCircle()](#drawcircle)
 - [drawEllipse()](#drawellipse)
+- [drawArc()](#drawarc)
+- [drawEllipticalArc()](#drawellipticalarc)
 - [drawPolygon()](#drawpolygon)
 - [drawBezier()](#drawbezier)
 - [drawText()](#drawtext)
@@ -200,6 +202,45 @@ draws an ellipse.
 |$backgroundColor|string\|null||`null`|'#ccffff'|background color (in hex format)|
 |$borderWidth|int||1|2|border width (in pixel)|
 |$borderColor|string\|null||'#000000'|'#0000ff'|border color (in hex format)|
+
+#### drawArc()
+
+draws an arc.
+
+> Note: `null` value for a color code results in transparent.
+
+|params|type|required|default|exampl|description|
+|:---|:---|:---|:---:|:---:|:---|
+|$x|int|required||60|horizontal position of the center (in pixel)|
+|$y|int|required||50|vertical position of the center (in pixel)|
+|$radius|int|required||40|radius of the circle (in pixel)|
+|$degrees1|int\|float|required||32.1|starting angle (in degrees)|
+|$degrees2|int\|float|required||-23.4|terminal angle (in degrees)|
+|$backgroundColor|string\|null||`null`|'#ccffff'|background color (in hex format)|
+|$borderWidth|int||1|2|border width (in pixel)|
+|$borderColor|string\|null||'#000000'|'#0000ff'|border color (in hex format)|
+|$withSides|bool||`false`|`true`|whether to draw sides|
+
+#### drawEllipticalArc()
+
+draws an elliptical arc.
+
+> Note: If a non-null background color is specified, or `true` is specified for the `withSide` argument, an elliptical sector connecting the center of the ellipse and the elliptical arc will be drawn.
+
+> Note: `null` value for a color code results in transparent.
+
+|params|type|required|default|exampl|description|
+|:---|:---|:---|:---:|:---:|:---|
+|$x|int|required||60|horizontal position of the center (in pixel)|
+|$y|int|required||50|vertical position of the center (in pixel)|
+|$width|int|required||80|width of the ellipse (in pixel)|
+|$height|int|required||120|height of the ellipse (in pixel)|
+|$degrees1|int\|float|required||32.1|starting angle (in degrees)|
+|$degrees2|int\|float|required||-23.4|terminal angle (in degrees)|
+|$backgroundColor|string\|null||`null`|'#ccffff'|background color (in hex format)|
+|$borderWidth|int||1|2|border width (in pixel)|
+|$borderColor|string\|null||'#000000'|'#0000ff'|border color (in hex format)|
+|$withSides|bool||`false`|`true`|whether to draw sides|
 
 #### drawPolygon()
 
@@ -301,6 +342,7 @@ Available `plot*` methods to plot figures within the `Plotarea`:
 - [plotCircle()](#plotcircle)
 - [plotPerfectCircle()](#plotperfectcircle)
 - [plotEllipse()](#plotellipse)
+- [plotArc()](#plotarc)
 - [plotPolygon()](#plotpolygon)
 - [plotBezier()](#plotbezier)
 - [plotText()](#plottext)
@@ -418,6 +460,26 @@ plots an ellipse within the `Plotarea`.
 |$backgroundColor|string\|null||`null`|'#cccccc'|background color (in hex format)|
 |$borderWidth|int||1|2|border width (in pixel)|
 |$borderColor|string\|null||'#000000'|'#0000ff'|border color (in hex format)|
+
+#### plotArc()
+
+plots an arc within the `Plotarea`.
+
+> Note: If the `viewport aspect ratio` and the `plotarea aspect ratio` are not equal, `plotArc()` draws an elliptical arc.
+
+> Note: `null` value for a color code results in transparent.
+
+|parmas|type|required|default|example|description|
+|:---|:---|:---|:---|:---:|:---|
+|$x|int\|float|required||-3.5|x-coordinate of the center|
+|$y|int\|float|required||4.5|y-coordinate of the center|
+|$radius|int\|float|required||2.5|radius|
+|$degrees1|int\|float|required||23.4|starting angle (in degrees)|
+|$degrees2|int\|float|required||-32.1|terminal angle (in degrees)|
+|$backgroundColor|string\|null||`null`|'#cccccc'|background color (in hex format)|
+|$borderWidth|int||1|2|border width (in pixel)|
+|$borderColor|string\|null||'#000000'|'#0000ff'|border color (in hex format)|
+|$widthSides|bool||`false`|`true`|whether to draw sides|
 
 #### plotPolygon()
 

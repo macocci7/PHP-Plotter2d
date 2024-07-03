@@ -24,15 +24,16 @@ $canvas
     ->plotGridValuesX()
     ->plotGridValuesY()
     ->plotPixel(-3, 4, '#ff0000')
-    // solid line
-    ->plotLine(-4, -4, 6, 6, 1, '#0000ff')
-    // dashed line
-    ->plotLine(-4, -4, 6, 0, 1, '#ff0000', [8, 4, 2, 4])
     ->plotBox(4, 3, 6, 2, '#ffffcc', 1, '#0000ff')
     ->plotBox(0.5, 4.5, 2.5, 3.5, '#ffcccc', 1, '#ff0000', [8, 4, 2, 4])
     ->plotCircle(5, -2.5, 1.5, '#ccccff', 1, '#0000ff')
     ->plotPerfectCircle(1.5, 1.5, 8, '#ff0000', 1, '#ff0000')
     ->plotEllipse(-3, 4.5, 1.5, 3, '#ffccff', 1, '#ff00ff')
+    ->plotArc(0, 0, 2, 0, 45, '#ff9999', 1, '#ff0000')
+    // solid line
+    ->plotLine(-4, -4, 6, 6, 1, '#0000ff')
+    // dashed line
+    ->plotLine(-4, -4, 6, 0, 1, '#ff0000', [8, 4, 2, 4])
     ->plotPolygon(
         points: [[-4, -1], [-3, 2.5], [-2, 0.5], [-1, 4]],
         backgroundColor: '#ffff99',
