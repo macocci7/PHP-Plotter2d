@@ -9,6 +9,7 @@ use Intervention\Image\Geometry\Factories\LineFactory;
 use Intervention\Image\Geometry\Factories\PolygonFactory;
 use Intervention\Image\Geometry\Factories\RectangleFactory;
 use Intervention\Image\Typography\FontFactory;
+use Macocci7\PhpPlotter2d\Enums\Position;
 
 trait DrawerTrait
 {
@@ -384,6 +385,194 @@ trait DrawerTrait
     }
 
     /**
+     * draws an arc
+     *
+     * @param   int         $x
+     * @param   int         $y
+     * @param   int         $radius
+     * @param   int|float   $degrees1
+     * @param   int|float   $degrees2
+     * @param   string|null $backgroundColor = null
+     * @param   int         $borderWidth = 1
+     * @param   string|null $borderColor = '#000000'
+     * @param   bool        $withSides = false
+     * @return  self
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     */
+    public function drawArc(
+        int $x,
+        int $y,
+        int $radius,
+        int|float $degrees1,
+        int|float $degrees2,
+        string|null $backgroundColor = null,
+        int $borderWidth = 1,
+        string|null $borderColor = '#000000',
+        bool $withSides = false,
+    ) {
+        // r: radius
+        // l: length of arc
+        // d: degrees
+        // t: radian
+        //      def.) l = rt
+        //          => t = l / r
+        //      def.) t:2π = d:360
+        //          => 360t = 2πd
+        //          => t = (π/180)d
+        //          => d = (180/π)t
+        //               = (180l/πr)
+        $goal = $degrees1 < $degrees2 ? $degrees2 : $degrees1;
+        $degrees = $degrees1 < $degrees2 ? $degrees1 : $degrees2;
+        $dd = 2 * 180 / (M_PI * $radius);
+        // starting point
+        $points = [
+            [
+                (int) round($x + $radius * cos(deg2rad($degrees))),
+                (int) round($y - $radius * sin(deg2rad($degrees))),
+            ],
+        ];
+        // calculate coordinates of points to draw
+        while ($degrees < $goal) {
+            $degrees += $dd;
+            if ($degrees > $goal) {
+                $degrees = $goal;
+            }
+            $x2 = (int) round($x + $radius * cos(deg2rad($degrees)));
+            $y2 = (int) round($y - $radius * sin(deg2rad($degrees)));
+            $points[] = [$x2, $y2];
+        }
+        // paint inside
+        $this->drawPolygon(
+            points: [[$x, $y], ...$points],
+            backgroundColor: $backgroundColor,
+            borderWidth: 0,
+        );
+        // drawing an arc
+        if ($withSides) {
+            // with sides
+            $this->drawPolygon(
+                points: [[$x, $y], ...$points],
+                backgroundColor: null,
+                borderWidth: $borderWidth,
+                borderColor: $borderColor,
+            );
+        } else {
+            // without sides
+            $count = count($points);
+            for ($i = 0; $i < $count - 1; $i++) {
+                $this->drawLine(
+                    x1: $points[$i][0],
+                    y1: $points[$i][1],
+                    x2: $points[$i + 1][0],
+                    y2: $points[$i + 1][1],
+                    width: $borderWidth,
+                    color: $borderColor,
+                );
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * draws an elliptical arc
+     *
+     * @param   int         $x
+     * @param   int         $y
+     * @param   int         $width
+     * @param   int         $height
+     * @param   int|float   $degrees1
+     * @param   int|float   $degrees2
+     * @param   string|null $backgroundColor = null
+     * @param   int         $borderWidth = 1
+     * @param   string|null $borderColor = '#000000'
+     * @param   bool        $withSides = false
+     * @return  self
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     */
+    public function drawEllipticalArc(
+        int $x,
+        int $y,
+        int $width,     // width of the ellipse
+        int $height,    // height of the ellipse
+        int|float $degrees1,
+        int|float $degrees2,
+        string|null $backgroundColor = null,
+        int $borderWidth = 1,
+        string|null $borderColor = '#000000',
+        bool $withSides = false,
+    ) {
+        // r: radius
+        // l: length of arc
+        // d: degrees
+        // t: radian
+        //      def.) l = rt
+        //          => t = l / r
+        //      def.) t:2π = d:360
+        //          => 360t = 2πd
+        //          => t = (π/180)d
+        //          => d = (180/π)t
+        //               = (180l/πr)
+        $radius = $width < $height
+            ? (int) round($height / 2)
+            : (int) round($width / 2);
+        $rateX = $width < $height ? $width / $height : 1;
+        $rateY = $height < $width ? $height / $width : 1;
+        $goal = $degrees1 < $degrees2 ? $degrees2 : $degrees1;
+        $degrees = $degrees1 < $degrees2 ? $degrees1 : $degrees2;
+        $dd = 2 * 180 / (M_PI * $radius);
+        // starting point
+        $points = [
+            [
+                (int) round($x + $radius * cos(deg2rad($degrees)) * $rateX),
+                (int) round($y - $radius * sin(deg2rad($degrees)) * $rateY),
+            ],
+        ];
+        // calculate coordinates of points to draw
+        while ($degrees < $goal) {
+            $degrees += $dd;
+            if ($degrees > $goal) {
+                $degrees = $goal;
+            }
+            $x2 = (int) round($x + $radius * cos(deg2rad($degrees)) * $rateX);
+            $y2 = (int) round($y - $radius * sin(deg2rad($degrees)) * $rateY);
+            $points[] = [$x2, $y2];
+        }
+        // paint inside
+        $this->drawPolygon(
+            points: [[$x, $y], ...$points],
+            backgroundColor: $backgroundColor,
+            borderWidth: 0,
+        );
+        // drawing an arc
+        if ($withSides) {
+            // with sides
+            $this->drawPolygon(
+                points: [[$x, $y], ...$points],
+                backgroundColor: null,
+                borderWidth: $borderWidth,
+                borderColor: $borderColor,
+            );
+        } else {
+            // without sides
+            $count = count($points);
+            for ($i = 0; $i < $count - 1; $i++) {
+                $this->drawLine(
+                    x1: $points[$i][0],
+                    y1: $points[$i][1],
+                    x2: $points[$i + 1][0],
+                    y2: $points[$i + 1][1],
+                    width: $borderWidth,
+                    color: $borderColor,
+                );
+            }
+        }
+        return $this;
+    }
+
+    /**
      * draws a polygon
      *
      * @param   array<int, array<int, int>> $points
@@ -462,7 +651,11 @@ trait DrawerTrait
      * @param   string  $fontColor = ''
      * @param   string  $align = 'left'
      * @param   string  $valign = 'bottom'
+     * @param   int|float   $angle = 0
+     * @param   int         $offsetX = 0
+     * @param   int         $offsetY = 0
      * @return  self
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function drawText(
         string $text,
@@ -473,6 +666,9 @@ trait DrawerTrait
         string $fontColor = '',
         string $align = 'left',   // 'right', 'center', 'left'(default)
         string $valign = 'bottom',  // 'top', 'middle', 'bottom'(default)
+        int|float $angle = 0,   // degrees to rotate the text counterclockwise
+        int $offsetX = 0,   // x-offset after rotation from left edge
+        int $offsetY = 0,   // y-offset after rotation from top edge
     ) {
         if ($fontSize === 0) {
             $fontSize = $this->fontSize;
@@ -483,7 +679,11 @@ trait DrawerTrait
         if (!$this->isColorCode($fontColor)) {
             $fontColor = $this->fontColor;
         }
-        $this->image->text(
+        $image = $this->imageManager->create(
+            $this->size['width'],
+            $this->size['height'],
+        );
+        $image->text(
             $text,
             $x,
             $y,
@@ -501,7 +701,14 @@ trait DrawerTrait
                 $font->color($fontColor);
                 $font->align($align);
                 $font->valign($valign);
-            }
+            },
+        );
+        $image->rotate($angle);
+        $this->image->place(
+            element: $image,
+            position: Position::composit($align, $valign),
+            offset_x: $offsetX,
+            offset_y: $offsetY,
         );
         return $this;
     }

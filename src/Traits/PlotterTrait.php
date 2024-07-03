@@ -130,6 +130,37 @@ trait PlotterTrait
     }
 
     /**
+     * plots a perfect circle on the plotarea
+     *
+     * @param   int|float   $x
+     * @param   int|float   $y
+     * @param   int         $radius (in pix)
+     * @param   string|null $backgroundColor = null
+     * @param   int         $borderWidth = 1
+     * @param   string|null $borderColor = '#000000'
+     * @return  self
+     */
+    public function plotPerfectCircle(
+        int|float $x,
+        int|float $y,
+        int $radius,    // in pix
+        string|null $backgroundColor = null,
+        int $borderWidth = 1,
+        string|null $borderColor = '#000000',
+    ) {
+        $center = $this->transformer->getCoord($x, $y);
+        $this->drawCircle(
+            $center['x'],
+            $center['y'],
+            $radius,
+            $backgroundColor,
+            $borderWidth,
+            $borderColor,
+        );
+        return $this;
+    }
+
+    /**
      * plots an ellipse
      *
      * @param   int|float   $x
@@ -161,6 +192,48 @@ trait PlotterTrait
             $backgroundColor,
             $borderWidth,
             $borderColor,
+        );
+        return $this;
+    }
+
+    /**
+     * plots an arc
+     *
+     * @param   int|float   $x
+     * @param   int|float   $y
+     * @param   int|float   $radius
+     * @param   int|float   $degrees1
+     * @param   int|float   $degrees2
+     * @param   string|null $backgroundColor = null
+     * @param   int         $borderWidth = 1
+     * @param   string|null $borderColor = '#000000'
+     * @param   bool        $withSides = false
+     * @return  self
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     */
+    public function plotArc(
+        int|float $x,
+        int|float $y,
+        int|float $radius,
+        int|float $degrees1,
+        int|float $degrees2,
+        string|null $backgroundColor = null,
+        int $borderWidth = 1,
+        string|null $borderColor = '#000000',
+        bool $withSides = false,
+    ) {
+        $coord = $this->transformer->getCoord($x, $y);
+        $this->drawEllipticalArc(
+            x: $coord['x'],
+            y: $coord['y'],
+            width: $this->transformer->getSpanX($radius * 2),
+            height: $this->transformer->getSpanY($radius * 2),
+            degrees1: $degrees1,
+            degrees2: $degrees2,
+            backgroundColor: $backgroundColor,
+            borderWidth: $borderWidth,
+            borderColor: $borderColor,
+            withSides: $withSides,
         );
         return $this;
     }
@@ -226,7 +299,11 @@ trait PlotterTrait
      * @param   string      $fontColor = ''
      * @param   string      $align = 'left'
      * @param   string      $valign = 'bottom'
+     * @param   int|float   $angle = 0
+     * @param   int         $offsetX = 0
+     * @param   int         $offsetY = 0
      * @return  self
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function plotText(
         string $text,
@@ -237,6 +314,9 @@ trait PlotterTrait
         string $fontColor = '',
         string $align = 'left',   // 'right', 'center', 'left'(default)
         string $valign = 'bottom',  // 'top', 'middle', 'bottom'(default)
+        int|float $angle = 0,   // degrees to rotate the text counterclockwise
+        int|float $offsetX = 0, // x-offset after rotation from left edge
+        int|float $offsetY = 0, // y-offset after rotation from top edge
     ) {
         $pos = $this->transformer->getCoord($x, $y);
         $this->drawText(
@@ -248,6 +328,9 @@ trait PlotterTrait
             fontColor: $fontColor,
             align: $align,
             valign: $valign,
+            angle: $angle,
+            offsetX: $this->transformer->getSpanX($offsetX),
+            offsetY: $this->transformer->getSpanY($offsetY),
         );
         return $this;
     }

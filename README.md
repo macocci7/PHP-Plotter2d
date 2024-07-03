@@ -115,6 +115,8 @@ Available methods to draw on the `Canvas`:
 - [drawBox()](#drawbox)
 - [drawCircle()](#drawcircle)
 - [drawEllipse()](#drawellipse)
+- [drawArc()](#drawarc)
+- [drawEllipticalArc()](#drawellipticalarc)
 - [drawPolygon()](#drawpolygon)
 - [drawBezier()](#drawbezier)
 - [drawText()](#drawtext)
@@ -201,6 +203,45 @@ draws an ellipse.
 |$borderWidth|int||1|2|border width (in pixel)|
 |$borderColor|string\|null||'#000000'|'#0000ff'|border color (in hex format)|
 
+#### drawArc()
+
+draws an arc.
+
+> Note: `null` value for a color code results in transparent.
+
+|params|type|required|default|exampl|description|
+|:---|:---|:---|:---:|:---:|:---|
+|$x|int|required||60|horizontal position of the center (in pixel)|
+|$y|int|required||50|vertical position of the center (in pixel)|
+|$radius|int|required||40|radius of the circle (in pixel)|
+|$degrees1|int\|float|required||32.1|starting angle (in degrees)|
+|$degrees2|int\|float|required||-23.4|terminal angle (in degrees)|
+|$backgroundColor|string\|null||`null`|'#ccffff'|background color (in hex format)|
+|$borderWidth|int||1|2|border width (in pixel)|
+|$borderColor|string\|null||'#000000'|'#0000ff'|border color (in hex format)|
+|$withSides|bool||`false`|`true`|whether to draw sides|
+
+#### drawEllipticalArc()
+
+draws an elliptical arc.
+
+> Note: If a non-null background color is specified, or `true` is specified for the `withSide` argument, an elliptical sector connecting the center of the ellipse and the elliptical arc will be drawn.
+
+> Note: `null` value for a color code results in transparent.
+
+|params|type|required|default|exampl|description|
+|:---|:---|:---|:---:|:---:|:---|
+|$x|int|required||60|horizontal position of the center (in pixel)|
+|$y|int|required||50|vertical position of the center (in pixel)|
+|$width|int|required||80|width of the ellipse (in pixel)|
+|$height|int|required||120|height of the ellipse (in pixel)|
+|$degrees1|int\|float|required||32.1|starting angle (in degrees)|
+|$degrees2|int\|float|required||-23.4|terminal angle (in degrees)|
+|$backgroundColor|string\|null||`null`|'#ccffff'|background color (in hex format)|
+|$borderWidth|int||1|2|border width (in pixel)|
+|$borderColor|string\|null||'#000000'|'#0000ff'|border color (in hex format)|
+|$withSides|bool||`false`|`true`|whether to draw sides|
+
 #### drawPolygon()
 
 draws a polygon.
@@ -241,6 +282,9 @@ draws text.
 |$fontColor|string||'#000000|'#009900'|font color (in hex format)|
 |$align|string||'left'|'center'|border width (in pixel)|
 |$valign|string||'bottom'|'middle'|border color (in hex format)|
+|$angle|int\float||0|-23.4|degrees to rotate (counterclockwise)|
+|$offsetX|int\float||0|3.5|x-offset from left edge (after rotation)|
+|$offsetY|int\float||0|-1.5|y-offset from top edge (after rotation)|
 
 ### 5.2. Handling Plotarea
 
@@ -296,7 +340,9 @@ Available `plot*` methods to plot figures within the `Plotarea`:
 - [plotLine()](#plotline)
 - [plotBox()](#plotbox)
 - [plotCircle()](#plotcircle)
+- [plotPerfectCircle()](#plotperfectcircle)
 - [plotEllipse()](#plotellipse)
+- [plotArc()](#plotarc)
 - [plotPolygon()](#plotpolygon)
 - [plotBezier()](#plotbezier)
 - [plotText()](#plottext)
@@ -368,6 +414,8 @@ polots a box within the `Plotarea`.
 plots a ciele within the `Plotarea`.
 
 > Note: If the `viewport aspect ratio` and the `plotarea aspect ratio` are not equal, `plotCircle()` draws an ellipse.
+>
+> Use [plotPerfectCircle()](#plotperfectcircle) if you want to plot a perfect circle regardless of transformation rate.
 
 > Note: `null` value for a color code results in transparent.
 
@@ -376,6 +424,23 @@ plots a ciele within the `Plotarea`.
 |$x|int\|float|required||-3.5|x-coordinate of the center|
 |$y|int\|float|required||4.5|y-coordinate of the center|
 |$radius|int\|float|required||2.5|radius|
+|$backgroundColor|string\|null||`null`|'#cccccc'|background color (in hex format)|
+|$borderWidth|int||1|2|border width (in pixel)|
+|$borderColor|string\|null||'#000000'|'#0000ff'|border color (in hex format)|
+
+#### plotPerfectCircle()
+
+plots a perfect ciele within the `Plotarea` regardless of transformation rate.
+
+> Note: Specify the radius in pix.
+
+> Note: `null` value for a color code results in transparent.
+
+|parmas|type|required|default|example|description|
+|:---|:---|:---|:---|:---:|:---|
+|$x|int\|float|required||-3.5|x-coordinate of the center|
+|$y|int\|float|required||4.5|y-coordinate of the center|
+|$radius|int|required||2|radius (in pix)|
 |$backgroundColor|string\|null||`null`|'#cccccc'|background color (in hex format)|
 |$borderWidth|int||1|2|border width (in pixel)|
 |$borderColor|string\|null||'#000000'|'#0000ff'|border color (in hex format)|
@@ -395,6 +460,26 @@ plots an ellipse within the `Plotarea`.
 |$backgroundColor|string\|null||`null`|'#cccccc'|background color (in hex format)|
 |$borderWidth|int||1|2|border width (in pixel)|
 |$borderColor|string\|null||'#000000'|'#0000ff'|border color (in hex format)|
+
+#### plotArc()
+
+plots an arc within the `Plotarea`.
+
+> Note: If the `viewport aspect ratio` and the `plotarea aspect ratio` are not equal, `plotArc()` draws an elliptical arc.
+
+> Note: `null` value for a color code results in transparent.
+
+|parmas|type|required|default|example|description|
+|:---|:---|:---|:---|:---:|:---|
+|$x|int\|float|required||-3.5|x-coordinate of the center|
+|$y|int\|float|required||4.5|y-coordinate of the center|
+|$radius|int\|float|required||2.5|radius|
+|$degrees1|int\|float|required||23.4|starting angle (in degrees)|
+|$degrees2|int\|float|required||-32.1|terminal angle (in degrees)|
+|$backgroundColor|string\|null||`null`|'#cccccc'|background color (in hex format)|
+|$borderWidth|int||1|2|border width (in pixel)|
+|$borderColor|string\|null||'#000000'|'#0000ff'|border color (in hex format)|
+|$widthSides|bool||`false`|`true`|whether to draw sides|
 
 #### plotPolygon()
 
@@ -436,6 +521,9 @@ plots text within the `Plotarea`.
 |$fontColor|string||'#000000'|'#666666'|font color (in hex format)|
 |$align|string||'left'|'center'|hirizontal align|
 |$valign|string||'bottom'|'middle'|vertical align|
+|$angle|int\|float||0|-23.4|degrees to rotate (counterclockwise)|
+|$offsetX|int\|float||0|3.5|x-offset from left edge (after rotation)|
+|$offsetY|int\|float||0|-1.5|y-offset from top edge (after rotation)|
 
 #### plotGridHorizon()
 
