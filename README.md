@@ -301,7 +301,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Macocci7\PhpPlotter2d\Plotter;
 
-$plotter = Plotter::make(
+$canvas = Plotter::make(
     canvasSize: [
         'width' => 800,     // required
         'height' => 400,    // required
