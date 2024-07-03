@@ -33,7 +33,7 @@ class Canvas
      *
      * @param   array<string, int>  $size
      * @param   array<string, array<int, int|float>>    $viewport
-     * @param   array<string, int|array<int, int>>  $plotarea
+     * @param   array<string, int|string|null|int[]>    $plotarea
      * @param   string|null $backgroundColor
      */
     public function __construct(
@@ -44,16 +44,16 @@ class Canvas
     ) {
         $this->loadConf();
         $this->imageManager = ImageManager::{$this->imageDriver}();
-        if ($this->plotarea === []) {
-            $this->setDefaultPlotarea();
-        }
+        $this->setDefaultPlotarea();
         $this->plotareaClass = (new Plotarea(
             size: [
                 'width' => $this->plotarea['width'],
                 'height' => $this->plotarea['height'],
             ],
             viewport: $this->viewport,
-            backgroundColor: $this->plotarea['backgroundColor'] ?? '#ffffff',
+            backgroundColor: array_key_exists('backgroundColor', $this->plotarea)
+                ? $this->plotarea['backgroundColor']
+                : '#ffffff',
         ))->create();
     }
 
@@ -104,14 +104,40 @@ class Canvas
     {
         $rateX = $this->defaultPlotareaRateX;
         $rateY = $this->defaultPlotareaRateY;
-        $this->plotarea = [
-            'offset' => [
+        $plotarea = $this->plotarea;
+        if (!array_key_exists('offset', $plotarea)) {
+            $plotarea['offset'] = [
                 (int) round($this->size['width']  * (1 - $rateX) / 2),
                 (int) round($this->size['height'] * (1 - $rateY) / 2),
-            ],
-            'width'  => (int) round($this->size['width']  * $rateX),
-            'height' => (int) round($this->size['height'] * $rateY),
-        ];
+            ];
+        }
+        if (!array_key_exists('width', $plotarea)) {
+            $plotarea['width']  = (int) round($this->size['width'] * $rateX);
+        }
+        if (!array_key_exists('height', $plotarea)) {
+            $plotarea['height'] = (int) round($this->size['height'] * $rateY);
+        }
+        $this->plotarea = $plotarea;
+    }
+
+    /**
+     * returns transformer
+     *
+     * @return  Transformer
+     */
+    public function getTransformer()
+    {
+        return $this->plotareaClass->getTransformer();
+    }
+
+    /**
+     * retunns the plotarea
+     *
+     * @return  array<string, int|string|null|int[]>
+     */
+    public function getPlotarea()
+    {
+        return $this->plotarea;
     }
 
     /**
