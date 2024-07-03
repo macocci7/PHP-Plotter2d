@@ -38,10 +38,10 @@ class Plotter
     /**
      * creates and returns a canvas
      *
-     * @param   array<string, int>                      $canvasSize
-     * @param   array<string, array<int, int|float>>    $viewport = []
-     * @param   array<string, int|array<int, int>>      $plotarea = []
-     * @param   string|null                             $backgroundColor = '#ffffff'
+     * @param   array<string, int>                              $canvasSize
+     * @param   array<string, array<int, int|float>>            $viewport = []
+     * @param   array<string, int|string|null|array<int, int>>  $plotarea = []
+     * @param   string|null                                     $backgroundColor = '#ffffff'
      * @return  Canvas
      */
     public static function make(

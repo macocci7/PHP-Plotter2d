@@ -95,4 +95,14 @@ class Plotarea
     {
         return $this->image;
     }
+
+    /**
+     * returns transformer
+     *
+     * @return  Transformer
+     */
+    public function getTransformer()
+    {
+        return $this->transformer;
+    }
 }
