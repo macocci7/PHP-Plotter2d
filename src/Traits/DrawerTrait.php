@@ -9,6 +9,7 @@ use Intervention\Image\Geometry\Factories\LineFactory;
 use Intervention\Image\Geometry\Factories\PolygonFactory;
 use Intervention\Image\Geometry\Factories\RectangleFactory;
 use Intervention\Image\Typography\FontFactory;
+use Macocci7\PhpPlotter2d\Enums\Position;
 
 trait DrawerTrait
 {
@@ -462,6 +463,9 @@ trait DrawerTrait
      * @param   string  $fontColor = ''
      * @param   string  $align = 'left'
      * @param   string  $valign = 'bottom'
+     * @param   int|float   $angle = 0
+     * @param   int         $offsetX = 0
+     * @param   int         $offsetY = 0
      * @return  self
      */
     public function drawText(
@@ -473,6 +477,9 @@ trait DrawerTrait
         string $fontColor = '',
         string $align = 'left',   // 'right', 'center', 'left'(default)
         string $valign = 'bottom',  // 'top', 'middle', 'bottom'(default)
+        int|float $angle = 0,   // degrees to rotate the text counterclockwise
+        int $offsetX = 0,   // x-offset after rotation from left edge
+        int $offsetY = 0,   // y-offset after rotation from top edge
     ) {
         if ($fontSize === 0) {
             $fontSize = $this->fontSize;
@@ -483,7 +490,11 @@ trait DrawerTrait
         if (!$this->isColorCode($fontColor)) {
             $fontColor = $this->fontColor;
         }
-        $this->image->text(
+        $image = $this->imageManager->create(
+            $this->size['width'],
+            $this->size['height'],
+        );
+        $image->text(
             $text,
             $x,
             $y,
@@ -501,7 +512,14 @@ trait DrawerTrait
                 $font->color($fontColor);
                 $font->align($align);
                 $font->valign($valign);
-            }
+            },
+        );
+        $image->rotate($angle);
+        $this->image->place(
+            element: $image,
+            position: Position::composit($align, $valign),
+            offset_x: $offsetX,
+            offset_y: $offsetY,
         );
         return $this;
     }

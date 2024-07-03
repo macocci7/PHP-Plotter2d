@@ -17,7 +17,7 @@ final class PositionTest extends TestCase
     protected array $positions = [
         'Top' => 'top',
         'Middle' => 'middle',
-        'Bottom' => 'Bottom',
+        'Bottom' => 'bottom',
         'Left' => 'left',
         'Center' => 'center',
         'Right' => 'right',
@@ -46,5 +46,33 @@ final class PositionTest extends TestCase
             $enum = Position::get($value);
             $this->assertSame($key, $enum->name);
         }
+    }
+
+    public static function provides_composit_can_return_correct_composit_position(): array
+    {
+        return [
+            ['align' => '', 'valign' => '', 'expected' => null, ],
+            ['align' => 'left', 'valign' => '', 'expected' => null, ],
+            ['align' => '', 'valign' => 'top', 'expected' => null, ],
+            ['align' => 'middle', 'valign' => 'top', 'expected' => null, ],
+            ['align' => 'center', 'valign' => 'center', 'expected' => null, ],
+            ['align' => 'left', 'valign' => 'upper', 'expected' => null, ],
+            ['align' => 'left', 'valign' => 'lower', 'expected' => null, ],
+            ['align' => 'left', 'valign' => 'top', 'expected' => 'top-left', ],
+            ['align' => 'center', 'valign' => 'top', 'expected' => 'top', ],
+            ['align' => 'right', 'valign' => 'top', 'expected' => 'top-right', ],
+            ['align' => 'left', 'valign' => 'middle', 'expected' => 'left', ],
+            ['align' => 'center', 'valign' => 'middle', 'expected' => 'center', ],
+            ['align' => 'right', 'valign' => 'middle', 'expected' => 'right', ],
+            ['align' => 'left', 'valign' => 'bottom', 'expected' => 'bottom-left', ],
+            ['align' => 'center', 'valign' => 'bottom', 'expected' => 'bottom', ],
+            ['align' => 'right', 'valign' => 'bottom', 'expected' => 'bottom-right', ],
+        ];
+    }
+
+    #[DataProvider('provides_composit_can_return_correct_composit_position')]
+    public function test_composit_can_return_correct_composit_position(string $align, string $valign, string|null $expected): void
+    {
+        $this->assertSame($expected, Position::composit($align, $valign));
     }
 }

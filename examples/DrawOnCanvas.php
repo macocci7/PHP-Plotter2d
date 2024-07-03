@@ -35,4 +35,17 @@ $canvas
         borderColor: '#009900',
     )
     ->drawText('PLOTTER2D', 60, 60, fontColor: '#666666', fontSize: 48, fontPath: $fontPath)
+    ->drawText(
+        text: 'Powered by intervention/iamge',
+        x: 80,
+        y: 20,
+        fontColor: '#666666',
+        fontSize: 16,
+        fontPath: $fontPath,
+        align: 'left',
+        valign: 'top',
+        angle: 90,
+        offsetX: 360,
+        offsetY: -40,
+    )
     ->save('img/DrawOnCanvas.png');

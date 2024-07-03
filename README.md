@@ -241,6 +241,9 @@ draws text.
 |$fontColor|string||'#000000|'#009900'|font color (in hex format)|
 |$align|string||'left'|'center'|border width (in pixel)|
 |$valign|string||'bottom'|'middle'|border color (in hex format)|
+|$angle|int\float||0|-23.4|degrees to rotate (counterclockwise)|
+|$offsetX|int\float||0|3.5|x-offset from left edge (after rotation)|
+|$offsetY|int\float||0|-1.5|y-offset from top edge (after rotation)|
 
 ### 5.2. Handling Plotarea
 
@@ -296,6 +299,7 @@ Available `plot*` methods to plot figures within the `Plotarea`:
 - [plotLine()](#plotline)
 - [plotBox()](#plotbox)
 - [plotCircle()](#plotcircle)
+- [plotPerfectCircle()](#plotperfectcircle)
 - [plotEllipse()](#plotellipse)
 - [plotPolygon()](#plotpolygon)
 - [plotBezier()](#plotbezier)
@@ -368,6 +372,8 @@ polots a box within the `Plotarea`.
 plots a ciele within the `Plotarea`.
 
 > Note: If the `viewport aspect ratio` and the `plotarea aspect ratio` are not equal, `plotCircle()` draws an ellipse.
+>
+> Use [plotPerfectCircle()](#plotperfectcircle) if you want to plot a perfect circle regardless of transformation rate.
 
 > Note: `null` value for a color code results in transparent.
 
@@ -376,6 +382,23 @@ plots a ciele within the `Plotarea`.
 |$x|int\|float|required||-3.5|x-coordinate of the center|
 |$y|int\|float|required||4.5|y-coordinate of the center|
 |$radius|int\|float|required||2.5|radius|
+|$backgroundColor|string\|null||`null`|'#cccccc'|background color (in hex format)|
+|$borderWidth|int||1|2|border width (in pixel)|
+|$borderColor|string\|null||'#000000'|'#0000ff'|border color (in hex format)|
+
+#### plotPerfectCircle()
+
+plots a perfect ciele within the `Plotarea` regardless of transformation rate.
+
+> Note: Specify the radius in pix.
+
+> Note: `null` value for a color code results in transparent.
+
+|parmas|type|required|default|example|description|
+|:---|:---|:---|:---|:---:|:---|
+|$x|int\|float|required||-3.5|x-coordinate of the center|
+|$y|int\|float|required||4.5|y-coordinate of the center|
+|$radius|int|required||2|radius (in pix)|
 |$backgroundColor|string\|null||`null`|'#cccccc'|background color (in hex format)|
 |$borderWidth|int||1|2|border width (in pixel)|
 |$borderColor|string\|null||'#000000'|'#0000ff'|border color (in hex format)|
@@ -436,6 +459,9 @@ plots text within the `Plotarea`.
 |$fontColor|string||'#000000'|'#666666'|font color (in hex format)|
 |$align|string||'left'|'center'|hirizontal align|
 |$valign|string||'bottom'|'middle'|vertical align|
+|$angle|int\|float||0|-23.4|degrees to rotate (counterclockwise)|
+|$offsetX|int\|float||0|3.5|x-offset from left edge (after rotation)|
+|$offsetY|int\|float||0|-1.5|y-offset from top edge (after rotation)|
 
 #### plotGridHorizon()
 

@@ -130,6 +130,37 @@ trait PlotterTrait
     }
 
     /**
+     * plots a perfect circle on the plotarea
+     *
+     * @param   int|float   $x
+     * @param   int|float   $y
+     * @param   int         $radius (in pix)
+     * @param   string|null $backgroundColor = null
+     * @param   int         $borderWidth = 1
+     * @param   string|null $borderColor = '#000000'
+     * @return  self
+     */
+    public function plotPerfectCircle(
+        int|float $x,
+        int|float $y,
+        int $radius,    // in pix
+        string|null $backgroundColor = null,
+        int $borderWidth = 1,
+        string|null $borderColor = '#000000',
+    ) {
+        $center = $this->transformer->getCoord($x, $y);
+        $this->drawCircle(
+            $center['x'],
+            $center['y'],
+            $radius,
+            $backgroundColor,
+            $borderWidth,
+            $borderColor,
+        );
+        return $this;
+    }
+
+    /**
      * plots an ellipse
      *
      * @param   int|float   $x
@@ -226,6 +257,9 @@ trait PlotterTrait
      * @param   string      $fontColor = ''
      * @param   string      $align = 'left'
      * @param   string      $valign = 'bottom'
+     * @param   int|float   $angle = 0
+     * @param   int         $offsetX = 0
+     * @param   int         $offsetY = 0
      * @return  self
      */
     public function plotText(
@@ -237,6 +271,9 @@ trait PlotterTrait
         string $fontColor = '',
         string $align = 'left',   // 'right', 'center', 'left'(default)
         string $valign = 'bottom',  // 'top', 'middle', 'bottom'(default)
+        int|float $angle = 0,   // degrees to rotate the text counterclockwise
+        int|float $offsetX = 0, // x-offset after rotation from left edge
+        int|float $offsetY = 0, // y-offset after rotation from top edge
     ) {
         $pos = $this->transformer->getCoord($x, $y);
         $this->drawText(
@@ -248,6 +285,9 @@ trait PlotterTrait
             fontColor: $fontColor,
             align: $align,
             valign: $valign,
+            angle: $angle,
+            offsetX: $this->transformer->getSpanX($offsetX),
+            offsetY: $this->transformer->getSpanY($offsetY),
         );
         return $this;
     }
