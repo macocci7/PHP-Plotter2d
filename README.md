@@ -280,11 +280,13 @@ draws text.
 |$fontSize|int||16|32|font size (in pixel)|
 |$fontPath|string||'./fonts/myfont.ttf'|32|font path (true type)|
 |$fontColor|string||'#000000|'#009900'|font color (in hex format)|
-|$align|string||'left'|'center'|border width (in pixel)|
-|$valign|string||'bottom'|'middle'|border color (in hex format)|
+|$align|string||'left'|'center'|text align|
+|$valign|string||'bottom'|'middle'|text valign|
 |$angle|int\float||0|-23.4|degrees to rotate (counterclockwise)|
 |$offsetX|int\float||0|3.5|x-offset from left edge (after rotation)|
 |$offsetY|int\float||0|-1.5|y-offset from top edge (after rotation)|
+|$rotateAlign|string||'center'|'left'|align (after rotation)|
+|$rotateValign|string||'middle'|'top'|valign (after rotation)|
 
 ### 5.2. Handling Plotarea
 
@@ -525,6 +527,8 @@ plots text within the `Plotarea`.
 |$angle|int\|float||0|-23.4|degrees to rotate (counterclockwise)|
 |$offsetX|int\|float||0|3.5|x-offset from left edge (after rotation)|
 |$offsetY|int\|float||0|-1.5|y-offset from top edge (after rotation)|
+|$rotateAlign|string||'center'|'left'|align (after rotation)|
+|$rotateValign|string||'middle'|'top'|valign (after rotation)|
 
 #### plotGridHorizon()
 

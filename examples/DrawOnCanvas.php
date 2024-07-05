@@ -4,14 +4,19 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Macocci7\PhpPlotter2d\Plotter;
 
+$canvasSize = [
+    'width' => 400,
+    'height' => 300,
+];
+// instantiation
 $canvas = Plotter::make(
-    canvasSize: [
-        'width' => 400,
-        'height' => 300,
-    ],
+    canvasSize: $canvasSize,
 );
 
+// Set a true-type font path
 $fontPath = '/usr/share/fonts/truetype/freefont/FreeSansBoldOblique.ttf';
+
+// drawing on the canvas
 $canvas
     ->fill(10, 10, '#ddeeff')
     ->drawPixel(380, 50, '#ff0000')
@@ -39,15 +44,18 @@ $canvas
     ->drawText('PLOTTER2D', 60, 60, fontColor: '#666666', fontSize: 48, fontPath: $fontPath)
     ->drawText(
         text: 'Powered by intervention/iamge',
-        x: 80,
-        y: 20,
+        x: (int) round($canvasSize['width'] / 2),
+        y: $canvasSize['height'] - 8,
         fontColor: '#666666',
         fontSize: 16,
         fontPath: $fontPath,
-        align: 'left',
-        valign: 'top',
+        align: 'center',
+        valign: 'bottom',
         angle: 90,
-        offsetX: 360,
-        offsetY: -40,
+        offsetX: 0,
+        offsetY: 0,
+        rotateAlign: 'right',
+        rotateValign: 'middle',
     )
+    // saving into the file
     ->save('img/DrawOnCanvas.png');
