@@ -654,6 +654,8 @@ trait DrawerTrait
      * @param   int|float   $angle = 0
      * @param   int         $offsetX = 0
      * @param   int         $offsetY = 0
+     * @param   string  $rotateAlign = 'center'
+     * @param   string  $rotateValign = 'middle'
      * @return  self
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -669,6 +671,8 @@ trait DrawerTrait
         int|float $angle = 0,   // degrees to rotate the text counterclockwise
         int $offsetX = 0,   // x-offset after rotation from left edge
         int $offsetY = 0,   // y-offset after rotation from top edge
+        string $rotateAlign = 'center',
+        string $rotateValign = 'middle',
     ) {
         if ($fontSize === 0) {
             $fontSize = $this->fontSize;
@@ -706,7 +710,7 @@ trait DrawerTrait
         $image->rotate($angle);
         $this->image->place(
             element: $image,
-            position: Position::composit($align, $valign),
+            position: Position::composit($rotateAlign, $rotateValign),
             offset_x: $offsetX,
             offset_y: $offsetY,
         );

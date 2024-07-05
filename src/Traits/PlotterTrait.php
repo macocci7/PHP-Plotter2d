@@ -302,6 +302,8 @@ trait PlotterTrait
      * @param   int|float   $angle = 0
      * @param   int         $offsetX = 0
      * @param   int         $offsetY = 0
+     * @param   string      $rotateAlign = 'center'
+     * @param   string      $rotateValign = 'middle'
      * @return  self
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -315,8 +317,10 @@ trait PlotterTrait
         string $align = 'left',   // 'right', 'center', 'left'(default)
         string $valign = 'bottom',  // 'top', 'middle', 'bottom'(default)
         int|float $angle = 0,   // degrees to rotate the text counterclockwise
-        int|float $offsetX = 0, // x-offset after rotation from left edge
-        int|float $offsetY = 0, // y-offset after rotation from top edge
+        int|float $offsetX = 0, // x-offset after rotation from left edge (in pix)
+        int|float $offsetY = 0, // y-offset after rotation from top edge (in pix)
+        string $rotateAlign = 'center',
+        string $rotateValign = 'middle',
     ) {
         $pos = $this->transformer->getCoord($x, $y);
         $this->drawText(
@@ -331,6 +335,8 @@ trait PlotterTrait
             angle: $angle,
             offsetX: $this->transformer->getSpanX($offsetX),
             offsetY: $this->transformer->getSpanY($offsetY),
+            rotateAlign: $rotateAlign,
+            rotateValign: $rotateValign,
         );
         return $this;
     }
