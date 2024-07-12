@@ -106,7 +106,7 @@ trait DrawerTrait
         array $dash = [1, 1],
     ) {
         $cX = ($x2 - $x1) == 0 ? 0 : ($x1 < $x2 ? 1 : -1);
-        $cY = $y1 < $y2 ? 1 : -1;
+        $cY = $x1 < $x2 ? 1 : -1;
         $m = $cX === 0 ? null : ($y2 - $y1) / ($x2 - $x1);
         $goal = (int) round(sqrt(($x2 - $x1) ** 2 + ($y2 - $y1) ** 2));
         $dashCount = count($dash);
@@ -117,7 +117,7 @@ trait DrawerTrait
             if (($i % 2) === 0) {
                 // start point
                 $dx = is_null($m) ? 0        : $l * sqrt(1 / (1 + $m ** 2)) * $cX;
-                $dy = is_null($m) ? $l * $cY : $l * sqrt(1 / (1 + $m ** 2)) * $m;
+                $dy = is_null($m) ? $l * $cY : $l * sqrt(1 / (1 + $m ** 2)) * $m * $cY;
                 $x3 = $x1 + $dx;
                 $y3 = $y1 + $dy;
             }
@@ -132,7 +132,7 @@ trait DrawerTrait
             if (($i % 2) === 0) {
                 // end point
                 $dx = is_null($m) ? 0        : $l * sqrt(1 / (1 + $m ** 2)) * $cX;
-                $dy = is_null($m) ? $l * $cY : $l * sqrt(1 / (1 + $m ** 2)) * $m;
+                $dy = is_null($m) ? $l * $cY : $l * sqrt(1 / (1 + $m ** 2)) * $m * $cY;
                 $x4 = $x1 + $dx;
                 $y4 = $y1 + $dy;
 
