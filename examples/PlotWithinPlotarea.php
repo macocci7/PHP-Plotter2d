@@ -11,6 +11,7 @@ $plotarea = [
     //'width' => 420,
     //'height' => 280,
     //'backgroundColor' => null, // transparent
+    'placeAutomatically' => false,
 ];
 
 $canvas = Plotter::make(
@@ -73,6 +74,7 @@ $canvas
         borderColor: '#009900',
     )
     ->plotText('y = x', 3, 5, 24)
+    ->placePlotarea()
     ->drawText('Plotting within the Plotarea', 90, 20, 34, '', '#333333', 'left', 'top')
     // frame of the ploarea
     ->drawBox(
