@@ -1,7 +1,7 @@
 {
     "name": "macocci7/php-plotter2d",
     "description": "A PHP Library to plot graphs and figures on a xy(-two-dimensional)-plane.",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "type": "library",
     "license": "MIT",
     "autoload": {

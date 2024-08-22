@@ -294,7 +294,7 @@ To plot figures within the `Plotarea`, ceate an instance of `Canvas` with the pa
 
 `viewport` is the definition of the visible area of the xy-plane, which consists of arrays of x and y ranges.
 
-`plotarea` has four attributes: `offset`, `width`, `height` and `backgroundColor`.
+`plotarea` has five attributes: `offset`, `width`, `height`, `backgroundColor` and `placeAutomatically`.
 
 ```php
 <?php
@@ -319,6 +319,7 @@ $canvas = Plotter::make(
         'width' => 640, // in pix, default=(80% of the canvas)
         'height' => 360 // in pix, default=(80% of the canvas)
         'backgroundColor' => '#dddddd', // defautl='#ffffff'
+        'placeAutomatically' => false, // default=true
     ],
     backgroundColor: '#0000cc',  // optional, default='#ffffff'
 );
@@ -333,6 +334,17 @@ Now, you can plot figures within the `Plotarea` by using `plot*` methods with co
 // borderColor: '#0000ff'
 $canvas
     ->plotBox(-3.5, 4.2, 2.5, 2.3, '#ffff99', 1, '#0000ff')
+    ->save('img/HandlingPlotarea.png');
+```
+
+When you set `$plotarea['placeAutomatically']` as `false`, you need to use `placePlotarea()` method to place `Plotarea` on the `Canvas` after using `plot*` methods.
+
+This is expected to avoid slowdowns when using the `plot*` methods frequently, and unexpected results when making the background of `Plotarea` transparent.
+
+```php
+$canvas
+    ->plotBox(-3.5, 4.2, 2.5, 2.3, '#ffff99', 1, '#0000ff')
+    ->placePlotarea()
     ->save('img/HandlingPlotarea.png');
 ```
 

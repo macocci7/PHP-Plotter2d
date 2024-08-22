@@ -82,7 +82,10 @@ class Canvas
     {
         if (str_starts_with($name, 'plot')) {
             $this->plotareaClass->{$name}(...$arguments);
-            $this->placePlotarea();
+            $place = $this->plotarea['placeAutomatically'] ?? true;
+            if ($place) {
+                $this->placePlotarea();
+            }
             return $this;
         }
         throw new \Exception("Call to Undefined method {$name}.");
@@ -174,7 +177,7 @@ class Canvas
      * places(overwrites) the plotarea on the canvas
      *
      */
-    private function placePlotarea(): void
+    public function placePlotarea(): self
     {
         $this->image->place(
             element: $this->plotareaClass->getImage(),
@@ -182,6 +185,7 @@ class Canvas
             offset_x: $this->plotarea['offset'][0],
             offset_y: $this->plotarea['offset'][1],
         );
+        return $this;
     }
 
     /**
