@@ -64,7 +64,12 @@ $points = $transformer->getCoords([
 ## 3. Requirements
 
 - PHP 8.1 or later
-- Imagick PHP Extention
+- Imagick PHP Extension
+
+    Check with commands:
+    ```bash
+    php -i | grep imagick
+    ```
 - Composer
 
 ## 4. Installation

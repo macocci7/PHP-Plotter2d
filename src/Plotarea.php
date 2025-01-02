@@ -6,9 +6,6 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Interfaces\ImageInterface;
 use Macocci7\PhpPlotter2d\Helpers\Config;
 
-/**
- * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- */
 class Plotarea
 {
     use Traits\AxisTrait;

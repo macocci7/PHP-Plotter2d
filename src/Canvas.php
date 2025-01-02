@@ -9,17 +9,16 @@ use Macocci7\PhpPlotter2d\Helpers\Config;
 // phpcs:disable
 /**
  * @method  Plotarea    plotPixel(int|float $x, int|float $y, string $color)
- * @method  Plotarea    plotLine(int|float $x1, int|float $y1, int|float $x2, int|float $y2, int $width = 1, string $color = '#000000', array $dash = [])
- * @method  Plotarea    plotBox(int|float $x1, int|float $y1, int|float $x2, int|float $y2, string|null $backgroundColor = null, int $borderWidth = 1, string|null $borderColor = '#000000', array $dash = [])
+ * @method  Plotarea    plotLine(int|float $x1, int|float $y1, int|float $x2, int|float $y2, int $width = 1, string $color = '#000000', int[] $dash = [])
+ * @method  Plotarea    plotBox(int|float $x1, int|float $y1, int|float $x2, int|float $y2, string|null $backgroundColor = null, int $borderWidth = 1, string|null $borderColor = '#000000', int[] $dash = [])
  * @method  Plotarea    plotCircle(int|float $x, int|float $y, int|float $radius, string|null $backgroundColor = null, int $borderWidth = 1, string|null $borderColor = '#000000')
  * @method  Plotarea    plotPerfectCircle(int|float $x, int|float $y, int $radius, string|null $backgroundColor = null, int $borderWidth = 1, string|null $borderColor = '#000000')
  * @method  Plotarea    plotEllipse(int|float $x, int|float $y, int|float $width, int|float $height, string|null $backgroundColor = null, int $borderWidth = 1, string|null $borderColor = '#000000')
  * @method  Plotarea    plotArc(int|float $x, int|float $y, int|float $radius, int|float $degrees1, int|float $degrees2, string|null $backgroundColor = null, int $borderWidth = 1, string|null $borderColor = '#000000', bool $withSides = false)
- * @method  Plotarea    plotPolygon(array $points, string|null $backgroundColor, int $borderWidth, string|null $borderColor)
- * @method  Plotarea    plotBezier(array $points, string|null $backgroundColor, int $borderWidth, string|null $borderColor)
+ * @method  Plotarea    plotPolygon(array<int[]> $points, string|null $backgroundColor, int $borderWidth, string|null $borderColor)
+ * @method  Plotarea    plotBezier(array<int[]> $points, string|null $backgroundColor, int $borderWidth, string|null $borderColor)
  * @method  Plotarea    plotText(string $text, int|float $x, int|float $y, int $fontSize = 0, string $fontPath = '', string $fontColor = '', string $align = 'left', string $valign = 'bottom', int|float $angle = 0, int|float $offsetX = 0, int|float $offsetY = 0, string $rotateAlign = 'center', string $rotateValign = 'middle')
  * @method  Plotarea    plotFill(int|float $x, int|float $y, string $color)
- * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 // phpcs:enable
 class Canvas
