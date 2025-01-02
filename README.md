@@ -840,4 +840,4 @@ returns the transformed span of the y-direction component.
 
 ***
 
-*Copyright 2024 macocci7*
+*Copyright 2024-2025 macocci7*
