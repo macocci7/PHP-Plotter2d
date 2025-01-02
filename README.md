@@ -64,7 +64,12 @@ $points = $transformer->getCoords([
 ## 3. Requirements
 
 - PHP 8.1 or later
-- Imagick PHP Extention
+- Imagick PHP Extension
+
+    Check with commands:
+    ```bash
+    php -i | grep imagick
+    ```
 - Composer
 
 ## 4. Installation
@@ -835,4 +840,4 @@ returns the transformed span of the y-direction component.
 
 ***
 
-*Copyright 2024 macocci7*
+*Copyright 2024-2025 macocci7*

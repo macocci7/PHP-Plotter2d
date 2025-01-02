@@ -209,7 +209,6 @@ trait PlotterTrait
      * @param   string|null $borderColor = '#000000'
      * @param   bool        $withSides = false
      * @return  self
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function plotArc(
         int|float $x,
@@ -305,7 +304,6 @@ trait PlotterTrait
      * @param   string      $rotateAlign = 'center'
      * @param   string      $rotateValign = 'middle'
      * @return  self
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function plotText(
         string $text,

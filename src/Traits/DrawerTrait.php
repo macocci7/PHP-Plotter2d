@@ -93,8 +93,6 @@ trait DrawerTrait
      * @param   string  $color = '#000000'
      * @param   int[]   $dash = [1, 1]
      * @return  self
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function drawDashedLine(
         int $x1,
@@ -121,8 +119,8 @@ trait DrawerTrait
                 // start point
                 $dx = is_null($m) ? 0        : $l * sqrt(1 / (1 + $m ** 2));
                 $dy = is_null($m) ? $l * $cY : $l * sqrt(1 / (1 + $m ** 2)) * $m;
-                $x3 = $x1 + $dx;
-                $y3 = $y1 + $dy;
+                $x3 = (int) round($x1 + $dx);
+                $y3 = (int) round($y1 + $dy);
             }
 
             // total length
@@ -136,8 +134,8 @@ trait DrawerTrait
                 // end point
                 $dx = is_null($m) ? 0        : $l * sqrt(1 / (1 + $m ** 2));
                 $dy = is_null($m) ? $l * $cY : $l * sqrt(1 / (1 + $m ** 2)) * $m;
-                $x4 = $x1 + $dx;
-                $y4 = $y1 + $dy;
+                $x4 = (int) round($x1 + $dx);
+                $y4 = (int) round($y1 + $dy);
 
                 // draws a line only when $i is even
                 $this->image->drawLine(
@@ -400,7 +398,6 @@ trait DrawerTrait
      * @param   string|null $borderColor = '#000000'
      * @param   bool        $withSides = false
      * @return  self
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function drawArc(
         int $x,
@@ -490,10 +487,6 @@ trait DrawerTrait
      * @param   string|null $borderColor = '#000000'
      * @param   bool        $withSides = false
      * @return  self
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-     * @SuppressWarnings(PHPMD.NPathComplexity)
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function drawEllipticalArc(
         int $x,
@@ -660,7 +653,6 @@ trait DrawerTrait
      * @param   string  $rotateAlign = 'center'
      * @param   string  $rotateValign = 'middle'
      * @return  self
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function drawText(
         string $text,
