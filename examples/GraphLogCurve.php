@@ -67,4 +67,4 @@ $canvas
     ->plotText("({$x}, {$y})", 2.25, 1.0, 24, $fontPath, '#333333', 'left', 'top');
 
 // saving into the file
-$canvas->save('img/GraphLogCurve.png');
+$canvas->save(__DIR__ . '/img/GraphLogCurve.png');
