@@ -109,7 +109,7 @@ You can save the image into a file with `save` method.
 ```php
 $canvas
     ->drawText('Handling Canvas', 300, 20, 32, valign: 'top')
-    ->save('img/HandlingCanvas.png');
+    ->save(__DIR__ . '/img/HandlingCanvas.png');
 ```
 
 Available methods to draw on the `Canvas`:
@@ -130,7 +130,7 @@ Available methods to draw on the `Canvas`:
 
 fills the `Canvas` with the specified color.
 
-|params|type|required|default|exampl|description|
+|params|type|required|default|example|description|
 |:---|:---|:---|:---:|:---:|:---|
 |$x|int|required||10|horizontal position (in pixel)|
 |$y|int|required||20|vertical position (in pixel)|
@@ -140,7 +140,7 @@ fills the `Canvas` with the specified color.
 
 draws a pixel.
 
-|params|type|required|default|exampl|description|
+|params|type|required|default|example|description|
 |:---|:---|:---|:---:|:---:|:---|
 |$x|int|required||10|horizontal position (in pixel)|
 |$y|int|required||20|vertical position (in pixel)|
@@ -150,7 +150,7 @@ draws a pixel.
 
 draws a line.
 
-|params|type|required|default|exampl|description|
+|params|type|required|default|example|description|
 |:---|:---|:---|:---:|:---:|:---|
 |$x1|int|required||10|horizontal position of starting point (in pixel)|
 |$y1|int|required||20|vertical position of starting point (in pixel)|
@@ -166,7 +166,7 @@ draws a box.
 
 > Note: `null` value for a color code results in transparent.
 
-|params|type|required|default|exampl|description|
+|params|type|required|default|example|description|
 |:---|:---|:---|:---:|:---:|:---|
 |$x1|int|required||10|horizontal position of starting point (in pixel)|
 |$y1|int|required||20|vertical position of starting point (in pixel)|
@@ -183,7 +183,7 @@ draws a circle.
 
 > Note: `null` value for a color code results in transparent.
 
-|params|type|required|default|exampl|description|
+|params|type|required|default|example|description|
 |:---|:---|:---|:---:|:---:|:---|
 |$x|int|required||60|horizontal position of the center (in pixel)|
 |$y|int|required||50|vertical position of the center (in pixel)|
@@ -198,7 +198,7 @@ draws an ellipse.
 
 > Note: `null` value for a color code results in transparent.
 
-|params|type|required|default|exampl|description|
+|params|type|required|default|example|description|
 |:---|:---|:---|:---:|:---:|:---|
 |$x|int|required||60|horizontal position of the center (in pixel)|
 |$y|int|required||50|vertical position of the center (in pixel)|
@@ -214,7 +214,7 @@ draws an arc.
 
 > Note: `null` value for a color code results in transparent.
 
-|params|type|required|default|exampl|description|
+|params|type|required|default|example|description|
 |:---|:---|:---|:---:|:---:|:---|
 |$x|int|required||60|horizontal position of the center (in pixel)|
 |$y|int|required||50|vertical position of the center (in pixel)|
@@ -234,7 +234,7 @@ draws an elliptical arc.
 
 > Note: `null` value for a color code results in transparent.
 
-|params|type|required|default|exampl|description|
+|params|type|required|default|example|description|
 |:---|:---|:---|:---:|:---:|:---|
 |$x|int|required||60|horizontal position of the center (in pixel)|
 |$y|int|required||50|vertical position of the center (in pixel)|
@@ -253,7 +253,7 @@ draws a polygon.
 
 > Note: `null` value for a color code results in transparent.
 
-|params|type|required|default|exampl|description|
+|params|type|required|default|example|description|
 |:---|:---|:---|:---:|:---:|:---|
 |$points|array<int, int[]>|required||[[1, 2], [3, 4]]|positions of the points (in pixel)|
 |$backgroundColor|string\|null||`null`|'#ccffff'|background color (in hex format)|
@@ -266,7 +266,7 @@ draws a Bezier curve.
 
 > Note: `null` value for a color code results in transparent.
 
-|params|type|required|default|exampl|description|
+|params|type|required|default|example|description|
 |:---|:---|:---|:---:|:---:|:---|
 |$points|array<int, int[]>|required||[[1, 2], [3, 4]]|positions of the points (in pixel)|
 |$backgroundColor|string\|null||`null`|'#ccffff'|background color (in hex format)|
@@ -277,13 +277,13 @@ draws a Bezier curve.
 
 draws text.
 
-|params|type|required|default|exampl|description|
+|params|type|required|default|example|description|
 |:---|:---|:---|:---:|:---:|:---|
 |$text|string|required||'Title'|text to draw|
 |$x|int|required||40|horizontal position (in pixel)|
 |$y|int|required||40|vertical position (in pixel)|
 |$fontSize|int||16|32|font size (in pixel)|
-|$fontPath|string||'./fonts/myfont.ttf'|32|font path (true type)|
+|$fontPath|string||''|'./fonts/myfont.ttf'|font path (true type)|
 |$fontColor|string||'#000000|'#009900'|font color (in hex format)|
 |$align|string||'left'|'center'|text align|
 |$valign|string||'bottom'|'middle'|text valign|
@@ -339,7 +339,7 @@ Now, you can plot figures within the `Plotarea` by using `plot*` methods with co
 // borderColor: '#0000ff'
 $canvas
     ->plotBox(-3.5, 4.2, 2.5, 2.3, '#ffff99', 1, '#0000ff')
-    ->save('img/HandlingPlotarea.png');
+    ->save(__DIR__ . '/img/HandlingPlotarea.png');
 ```
 
 When you set `$plotarea['placeAutomatically']` as `false`, you need to use `placePlotarea()` method to place `Plotarea` on the `Canvas` after using `plot*` methods.
@@ -350,7 +350,7 @@ This is expected to avoid slowdowns when using the `plot*` methods frequently, a
 $canvas
     ->plotBox(-3.5, 4.2, 2.5, 2.3, '#ffff99', 1, '#0000ff')
     ->placePlotarea()
-    ->save('img/HandlingPlotarea.png');
+    ->save(__DIR__ . '/img/HandlingPlotarea.png');
 ```
 
 Available `plot*` methods to plot figures within the `Plotarea`:

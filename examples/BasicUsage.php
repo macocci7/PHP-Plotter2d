@@ -38,4 +38,4 @@ $canvas
     ->plotScaleY()
     // drawing outside the plotarea
     ->drawText('Basic Usage', 300, 20, 32, valign: 'top')
-    ->save('img/BasicUsage.png');
+    ->save(__DIR__ . '/img/BasicUsage.png');

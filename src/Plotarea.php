@@ -17,7 +17,7 @@ class Plotarea
 
     protected int $CANVAS_WIDTH_LIMIT_LOWER;
     protected int $CANVAS_HEIGHT_LIMIT_LOWER;
-    protected string $fontPath;
+    protected string $fontPath = __DIR__ . '/Fonts/ipaexg.ttf';
     protected int $fontSize;
     protected string $fontColor;
 
@@ -57,7 +57,6 @@ class Plotarea
             'CANVAS_WIDTH_LIMIT_LOWER',
             'CANVAS_HEIGHT_LIMIT_LOWER',
             'imageDriver',
-            'fontPath',
             'fontSize',
             'fontColor',
         ];

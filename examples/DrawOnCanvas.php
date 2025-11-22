@@ -58,4 +58,4 @@ $canvas
         rotateValign: 'middle',
     )
     // saving into the file
-    ->save('img/DrawOnCanvas.png');
+    ->save(__DIR__ . '/img/DrawOnCanvas.png');

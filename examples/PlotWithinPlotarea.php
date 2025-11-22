@@ -83,4 +83,4 @@ $canvas
         x2: $coords[1][0] + $offset[0],
         y2: $coords[1][1] + $offset[1],
     )
-    ->save('img/PlotWithinPlotarea.png');
+    ->save(__DIR__ . '/img/PlotWithinPlotarea.png');

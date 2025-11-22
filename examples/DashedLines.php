@@ -74,4 +74,4 @@
         ->plotText('C', $points[2][0], $points[2][1] + 0.2, fontSize: 20, align: 'center', valign: 'bottom')
         ->plotText('D', $points[3][0] - 0.2, $points[3][1], fontSize: 20, align: 'right', valign: 'middle')
         // savinng image into the file
-        ->save('img/DashedLines.png');
+        ->save(__DIR__ . '/img/DashedLines.png');

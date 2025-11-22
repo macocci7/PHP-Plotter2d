@@ -5,7 +5,7 @@ props:
     CANVAS_HEIGHT_LIMIT_LOWER: 100
     #imageDriver: 'gd'
     imageDriver: 'imagick'
-    fontPath: 'fonts/ipaexg.ttf'
+    #fontPath: 'fonts/ipaexg.ttf'
     fontSize: 16
     fontColor: '#333333'
     defaultPlotareaRateX: 0.7

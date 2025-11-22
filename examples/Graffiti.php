@@ -91,4 +91,4 @@ $canvas
         borderColor: '#006600',
     )
     ->drawText('Just a Graffiti', 300, 20, 32, fontColor: '#ffffff', valign: 'top')
-    ->save('img/Graffiti.png');
+    ->save(__DIR__ . '/img/Graffiti.png');
