@@ -4,6 +4,7 @@ namespace Macocci7\PhpPlotter2d;
 
 use Intervention\Image\ImageManager;
 use Intervention\Image\Interfaces\ImageInterface;
+use Macocci7\PhpPlotter2d\Enums\ImageDriver;
 use Macocci7\PhpPlotter2d\Helpers\Config;
 
 // phpcs:disable
@@ -55,7 +56,8 @@ class Canvas
         protected string|null $backgroundColor = '#ffffff',
     ) {
         $this->loadConf();
-        $this->imageManager = ImageManager::{$this->imageDriver}();
+        $imageDriver = ImageDriver::tryFrom($this->imageDriver)->classname();
+        $this->imageManager = ImageManager::usingDriver($imageDriver);
         $this->setDefaultPlotarea();
         $this->plotareaClass = (new Plotarea(
             size: [

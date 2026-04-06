@@ -8,10 +8,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Macocci7\PhpPlotter2d\Transformer;
 
-/**
- * @SuppressWarnings(PHPMD.CamelCaseMethodName)
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
- */
 final class TransformerTest extends TestCase
 {
     protected $viewport = [
