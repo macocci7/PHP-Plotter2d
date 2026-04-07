@@ -68,9 +68,15 @@ $points = $transformer->getCoords([
 
     Check with commands:
     ```bash
-    php -i | grep imagick
+    (php -m; php -i) | grep imagick
     ```
-- Composer
+- Mbstring PHP Extension
+
+    Check with commands:
+    ```bash
+    (php -m; php -i) | grep mbstring
+    ```
+- [Composer](https://getcomposer.org/)
 
 ## 4. Installation
 

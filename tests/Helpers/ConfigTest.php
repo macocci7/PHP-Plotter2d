@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Macocci7\PhpPlotter2d\Helpers;
+namespace Macocci7\PhpPlotter2d\Tests\Helpers;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;

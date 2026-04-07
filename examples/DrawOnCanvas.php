@@ -14,7 +14,7 @@ $canvas = Plotter::make(
 );
 
 // Set a true-type font path
-$fontPath = '/usr/share/fonts/truetype/freefont/FreeSansBoldOblique.ttf';
+$fontPath = '/usr/share/fonts/truetype/liberation/LiberationSans-BoldItalic.ttf';
 
 // drawing on the canvas
 $canvas

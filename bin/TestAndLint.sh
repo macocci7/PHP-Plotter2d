@@ -36,11 +36,6 @@ test_and_lint() {
                         -p \
                         -s \
                         .
-    #echo "-----------------------------------------------------------"
-    #echo "[PHP $1][phpmd]"
-    #./vendor/bin/phpmd \
-    #                   ./src/ ./examples/ ./tests/ text \
-    #                   phpmd.xml
     echo "-----------------------------------------------------------"
     echo "[PHP $1][phpstan]"
     ./vendor/bin/phpstan analyze -c phpstan.neon
@@ -50,7 +45,7 @@ test_and_lint() {
     echo "-----------------------------------------------------------"
 }
 
-echo "[[TesAndLint.sh]]"
+echo "[[TestAndLint.sh]]"
 
 SUPPORTED_PHP_VERSIONS=PHP_VERSIONS
 if [ ! -f $SUPPORTED_PHP_VERSIONS ]; then
