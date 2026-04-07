@@ -9,7 +9,9 @@ use Intervention\Image\Geometry\Factories\LineFactory;
 use Intervention\Image\Geometry\Factories\PolygonFactory;
 use Intervention\Image\Geometry\Factories\RectangleFactory;
 use Intervention\Image\Typography\FontFactory;
+use Macocci7\PhpPlotter2d\Enums\Align;
 use Macocci7\PhpPlotter2d\Enums\Position;
+use Macocci7\PhpPlotter2d\Helpers\Color;
 
 trait DrawerTrait
 {
@@ -26,7 +28,7 @@ trait DrawerTrait
         int $y,
         string $color = '#000000',
     ) {
-        $this->image->drawPixel($x, $y, $color);
+        $this->image->drawPixel($x, $y, Color::parse($color));
         return $this;
     }
 
@@ -75,7 +77,7 @@ trait DrawerTrait
             ) {
                 $line->from($x1, $y1);
                 $line->to($x2, $y2);
-                $line->color($color);
+                $line->color(Color::parse($color));
                 $line->width($width);
             }
         );
@@ -151,7 +153,7 @@ trait DrawerTrait
                     ) {
                         $line->from($x3, $y3);  // @phpstan-ignore-line
                         $line->to($x4, $y4);    // @phpstan-ignore-line
-                        $line->color($color);
+                        $line->color(Color::parse($color));
                         $line->width($width);
                     }
                 );
@@ -200,20 +202,21 @@ trait DrawerTrait
         $width  = abs($x2 - $x1) + 1;
         $height = abs($y2 - $y1) + 1;
         $this->image->drawRectangle(
-            $x1,
-            $y1,
             function (
                 RectangleFactory $rectangle
             ) use (
+                $x1,
+                $y1,
                 $width,
                 $height,
                 $backgroundColor,
                 $borderWidth,
                 $borderColor,
             ) {
+                $rectangle->at($x1, $y1);
                 $rectangle->size($width, $height);
-                $rectangle->background($backgroundColor);
-                $rectangle->border($borderColor, $borderWidth);
+                $rectangle->background(Color::parse($backgroundColor));
+                $rectangle->border(Color::parse($borderColor), $borderWidth);
             }
         );
         return $this;
@@ -246,17 +249,18 @@ trait DrawerTrait
         $width  = abs($x2 - $x1) + 1;
         $height = abs($y2 - $y1) + 1;
         $this->image->drawRectangle(
-            $x1,
-            $y1,
             function (
                 RectangleFactory $rectangle
             ) use (
+                $x1,
+                $y1,
                 $width,
                 $height,
                 $backgroundColor,
             ) {
+                $rectangle->at($x1, $y1);
                 $rectangle->size($width, $height);
-                $rectangle->background($backgroundColor);
+                $rectangle->background(Color::parse($backgroundColor));
             }
         );
 
@@ -326,19 +330,20 @@ trait DrawerTrait
         string|null $borderColor = '#000000',
     ) {
         $this->image->drawCircle(
-            $x,
-            $y,
             function (
                 CircleFactory $circle
             ) use (
+                $x,
+                $y,
                 $radius,
                 $backgroundColor,
                 $borderWidth,
                 $borderColor,
             ) {
+                $circle->at($x, $y);
                 $circle->radius($radius);
-                $circle->background($backgroundColor);
-                $circle->border($borderColor, $borderWidth);
+                $circle->background(Color::parse($backgroundColor));
+                $circle->border(Color::parse($borderColor), $borderWidth);
             }
         );
         return $this;
@@ -366,20 +371,21 @@ trait DrawerTrait
         string|null $borderColor = '#000000',
     ) {
         $this->image->drawEllipse(
-            $x,
-            $y,
             function (
                 EllipseFactory $ellipse
             ) use (
+                $x,
+                $y,
                 $width,
                 $height,
                 $backgroundColor,
                 $borderWidth,
                 $borderColor,
             ) {
+                $ellipse->at($x, $y);
                 $ellipse->size($width, $height);
-                $ellipse->background($backgroundColor);
-                $ellipse->border($borderColor, $borderWidth);
+                $ellipse->background(Color::parse($backgroundColor));
+                $ellipse->border(Color::parse($borderColor), $borderWidth);
             }
         );
         return $this;
@@ -595,8 +601,8 @@ trait DrawerTrait
                 foreach ($points as $point) {
                     $polygon->point($point[0], $point[1]);
                 }
-                $polygon->background($backgroundColor);
-                $polygon->border($borderColor, $borderWidth);
+                $polygon->background(Color::parse($backgroundColor));
+                $polygon->border(Color::parse($borderColor), $borderWidth);
             }
         );
         return $this;
@@ -629,8 +635,8 @@ trait DrawerTrait
                 foreach ($points as $point) {
                     $bezier->point($point[0], $point[1]);
                 }
-                $bezier->background($backgroundColor);
-                $bezier->border($borderColor, $borderWidth);
+                $bezier->background(Color::parse($backgroundColor));
+                $bezier->border(Color::parse($borderColor), $borderWidth);
             }
         );
         return $this;
@@ -678,7 +684,7 @@ trait DrawerTrait
         if (!$this->isColorCode($fontColor)) {
             $fontColor = $this->fontColor;
         }
-        $image = $this->imageManager->create(
+        $image = $this->imageManager->createImage(
             $this->size['width'],
             $this->size['height'],
         );
@@ -697,17 +703,16 @@ trait DrawerTrait
             ) {
                 $font->filename($fontPath);
                 $font->size($fontSize);
-                $font->color($fontColor);
-                $font->align($align);
-                $font->valign($valign);
+                $font->color(Color::parse($fontColor));
+                $font->align(Align::parse($align), Align::parse($valign));
             },
         );
-        $image->rotate($angle);
-        $this->image->place(
-            element: $image,
-            position: Position::composit($rotateAlign, $rotateValign),
-            offset_x: $offsetX,
-            offset_y: $offsetY,
+        $image->rotate(0 - $angle);
+        $this->image->insert(
+            image: $image,
+            x: $offsetX,
+            y: $offsetY,
+            alignment: Position::composit($rotateAlign, $rotateValign),
         );
         return $this;
     }
@@ -722,7 +727,7 @@ trait DrawerTrait
      */
     public function fill(int $x, int $y, string $color)
     {
-        $this->image->fill($color, $x, $y);
+        $this->image->fill(Color::parse($color), $x, $y);
         return $this;
     }
 }

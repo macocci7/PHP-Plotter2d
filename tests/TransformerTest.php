@@ -2,16 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Macocci7\PhpPlotter2d;
+namespace Macocci7\PhpPlotter2d\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Macocci7\PhpPlotter2d\Transformer;
 
-/**
- * @SuppressWarnings(PHPMD.CamelCaseMethodName)
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
- */
 final class TransformerTest extends TestCase
 {
     protected $viewport = [

@@ -2,16 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Macocci7\PhpPlotter2d;
+namespace Macocci7\PhpPlotter2d\Tests\Enums;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Macocci7\PhpPlotter2d\Enums\Position;
 
-/**
- * @SuppressWarnings(PHPMD.CamelCaseMethodName)
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
- */
 final class PositionTest extends TestCase
 {
     protected array $positions = [

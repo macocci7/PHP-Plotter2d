@@ -2,8 +2,11 @@
 
 namespace Macocci7\PhpPlotter2d;
 
+use Intervention\Image\Color;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Interfaces\ImageInterface;
+use Intervention\Image\Interfaces\ImageManagerInterface;
+use Macocci7\PhpPlotter2d\Enums\ImageDriver;
 use Macocci7\PhpPlotter2d\Helpers\Config;
 
 // phpcs:disable
@@ -33,7 +36,7 @@ class Canvas
     protected string $fontColor;
 
     protected string $imageDriver = 'imagick';
-    protected ImageManager $imageManager;
+    protected ImageManagerInterface $imageManager;
     protected ImageInterface $image;
 
     protected Plotarea $plotareaClass;
@@ -55,7 +58,8 @@ class Canvas
         protected string|null $backgroundColor = '#ffffff',
     ) {
         $this->loadConf();
-        $this->imageManager = ImageManager::{$this->imageDriver}();
+        $imageDriver = ImageDriver::tryFrom($this->imageDriver)->classname();
+        $this->imageManager = ImageManager::usingDriver($imageDriver);
         $this->setDefaultPlotarea();
         $this->plotareaClass = (new Plotarea(
             size: [
@@ -161,12 +165,12 @@ class Canvas
      */
     public function create()
     {
-        $this->image = $this->imageManager->create(
+        $this->image = $this->imageManager->createImage(
             $this->size['width'],
             $this->size['height'],
         );
         if ($this->isColorCode($this->backgroundColor)) {
-            $this->image = $this->image->fill($this->backgroundColor);
+            $this->image = $this->image->fill(Color::parse($this->backgroundColor));
         }
         return $this;
     }
@@ -177,11 +181,11 @@ class Canvas
      */
     public function placePlotarea(): self
     {
-        $this->image->place(
-            element: $this->plotareaClass->getImage(),
-            position: 'top-left',
-            offset_x: $this->plotarea['offset'][0],
-            offset_y: $this->plotarea['offset'][1],
+        $this->image->insert(
+            image: $this->plotareaClass->getImage(),
+            x: $this->plotarea['offset'][0],
+            y: $this->plotarea['offset'][1],
+            alignment: 'top-left',
         );
         return $this;
     }

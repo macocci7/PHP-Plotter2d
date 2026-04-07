@@ -2,8 +2,11 @@
 
 namespace Macocci7\PhpPlotter2d;
 
+use Intervention\Image\Color;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Interfaces\ImageInterface;
+use Intervention\Image\Interfaces\ImageManagerInterface;
+use Macocci7\PhpPlotter2d\Enums\ImageDriver;
 use Macocci7\PhpPlotter2d\Helpers\Config;
 
 class Plotarea
@@ -22,7 +25,7 @@ class Plotarea
     protected string $fontColor;
 
     protected string $imageDriver = 'imagick';
-    protected ImageManager $imageManager;
+    protected ImageManagerInterface $imageManager;
     protected ImageInterface $image;
     protected Transformer $transformer;
 
@@ -39,7 +42,8 @@ class Plotarea
         protected string|null $backgroundColor = '#ffffff',
     ) {
         $this->loadConf();
-        $this->imageManager = ImageManager::{$this->imageDriver}();
+        $imageDriver = ImageDriver::tryFrom($this->imageDriver)->classname();
+        $this->imageManager = ImageManager::usingDriver($imageDriver);
         $this->transformer = new Transformer(
             viewport: $this->viewport,
             plotarea: $this->size,
@@ -72,12 +76,12 @@ class Plotarea
      */
     public function create()
     {
-        $this->image = $this->imageManager->create(
+        $this->image = $this->imageManager->createImage(
             $this->size['width'],
             $this->size['height'],
         );
         if ($this->isColorCode($this->backgroundColor)) {
-            $this->image = $this->image->fill($this->backgroundColor);
+            $this->image = $this->image->fill(Color::parse($this->backgroundColor));
         }
         return $this;
     }

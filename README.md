@@ -63,14 +63,20 @@ $points = $transformer->getCoords([
 
 ## 3. Requirements
 
-- PHP 8.1 or later
+- PHP 8.3 or later
 - Imagick PHP Extension
 
     Check with commands:
     ```bash
-    php -i | grep imagick
+    (php -m; php -i) | grep imagick
     ```
-- Composer
+- Mbstring PHP Extension
+
+    Check with commands:
+    ```bash
+    (php -m; php -i) | grep mbstring
+    ```
+- [Composer](https://getcomposer.org/)
 
 ## 4. Installation
 
@@ -837,7 +843,3 @@ returns the transformed span of the y-direction component.
 ## 7. LICENSE
 
 [MIT](LICENSE)
-
-***
-
-*Copyright 2024-2025 macocci7*
